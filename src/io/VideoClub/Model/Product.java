@@ -4,25 +4,26 @@
  * and open the template in the editor.
  */
 package io.VideoClub.Model;
-
 import java.util.UUID;
 
-public abstract class Product extends Item implements Cloneable{
-    public enum Status{
+public abstract class Product extends Item implements Cloneable {
+
+    public enum Status {
         AVAILABLE,
         RESERVED
     }
     protected String key;
-    protected Status status; 
-    
-    public Product(){}
-    public Product(String name, String description,double prize){
-        super(name,description,prize);
-        this.key=generateRandom16Chars();
+    protected Status status;
+
+    public Product() {}
+
+    public Product(String name, String description, double prize) {
+        super(name, description, prize);
+        this.key = generateRandom16Chars();
     }
-    
-    private String generateRandom16Chars(){
-        return(String)UUID.randomUUID().toString().subSequence(0, 16);
+
+    private String generateRandom16Chars() {
+        return (String) UUID.randomUUID().toString().subSequence(0, 16);
     }
 
     public String getKey() {
@@ -40,14 +41,14 @@ public abstract class Product extends Item implements Cloneable{
     public void setStatus(Status status) {
         this.status = status;
     }
-    
-    public boolean equals(Object o){
-        boolean result=false;
-        if(o!=null){
-            if(o instanceof Product){
-                Product other=(Product)o;
-                if(other.key.equals(other.key)){
-                    result=true;
+
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (o != null) {
+            if (o instanceof Product) {
+                Product other = (Product) o;
+                if (other.key.equals(other.key)) {
+                    result = true;
                 }
             }
         }
@@ -56,14 +57,14 @@ public abstract class Product extends Item implements Cloneable{
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        Product clone=(Product)super.clone(); //To change body of generated methods, choose Tools | Templates.
-        clone.key=generateRandom16Chars();
-        return (Object)clone;
+        Product clone = (Product) super.clone(); //To change body of generated methods, choose Tools | Templates.
+        clone.key = generateRandom16Chars();
+        return (Object) clone;
     }
 
     @Override
     public String toString() {
-        return super.toString()+ "status=" + status + '}';
+        return super.toString() + "status=" + status + '}';
     }
-    
+
 }
