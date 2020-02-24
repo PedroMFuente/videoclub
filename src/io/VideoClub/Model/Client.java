@@ -9,43 +9,47 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author pedro
+ * @author migue
  */
-public class Client implements IClient{
+public class Client implements IClient {
+    private String ID;
+    private String name;
+    private LocalDateTime time;
+    private String phone;
 
     @Override
     public String getID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ID;
     }
 
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return name;
     }
 
     @Override
     public void setName(String n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      this.name = n;
     }
 
     @Override
     public LocalDateTime getTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return time;
     }
 
     @Override
     public void setTime(LocalDateTime t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.time = t;
     }
 
     @Override
     public String getPhone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return phone;
     }
 
     @Override
     public void setPhone(String p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.phone = p;
     }
     
 }
