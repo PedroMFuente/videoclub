@@ -2,13 +2,13 @@ package io.VideoClub.Model;
 
 import io.VideoClub.Model.Enums.GameCategory;
 
-public class Juego extends Product{
+public class Game extends Product{
     private GameCategory category;
 
-    public Juego() {
+    public Game() {
     }
     
-    public Juego(String name, String description,double prize, GameCategory category){
+    public Game(String name, String description,double prize, GameCategory category){
         super(name,description,prize);
         this.category=category;
     }
