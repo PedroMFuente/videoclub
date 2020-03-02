@@ -11,48 +11,114 @@ import io.VideoClub.Model.Enums.ProductsTypes;
 import io.VideoClub.Model.IClient;
 import io.VideoClub.Model.Product;
 import io.VideoClub.Model.Reservation;
+import io.VideoClub.Model.Store;
 import java.time.LocalDate;
+import io.VideoClub.Model.Movie;
+import io.VideoClub.Model.Game;
+import io.VideoClub.Model.Otros;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.TreeSet;
 
 /**
  *
  * @author pedro
  */
-public class AppController implements IAppController{
+public class AppController implements IAppController {
+
+    Store s = Store.getInstance();
 
     @Override
     public Set<Product> listAllProducts() {
-       
+        return s.products;
     }
 
     @Override
     public Set<Product> listAllProducts(Comparator c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.products;
     }
 
     @Override
     public Set<Product> listAllByType(ProductsTypes type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> p = new TreeSet<>();
+        for (Product pr : s.products) {
+            switch (type) {
+                case Peliculas:
+                    if (pr instanceof Movie) {
+                        p.add(pr);
+                    }
+                    break;
+                case Juegos:
+                    if (pr instanceof Game) {
+                        p.add(pr);
+                    }
+                    break;
+                case Otros:
+                    if (pr instanceof Otros) {
+                        p.add(pr);
+                    }
+                    break;
+                default:
+                    p.addAll(s.products);
+                    break;
+
+            }
+        }
+        return p;
     }
 
     @Override
     public Set<Product> listAllByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> p = new TreeSet<>();
+        for (Product pr : s.products) {
+            if (name.equals(pr.getName())) {
+                p.add(pr);
+            }
+        }
+        return p;
     }
 
     @Override
     public Set<Product> listAllByName(String name, ProductsTypes type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> aux2 = listAllByType(type);
+        Set<Product> aux = listAllByName(name);
+        Set<Product> p = new TreeSet<>();
+
+        for (Product pr : aux) {
+            for (Product pr2 : aux2) {
+                if (pr.equals(pr2)) {
+                    p.add(pr);
+                }
+            }
+        }
+        return p;
     }
 
     @Override
     public Set<Product> listAllByStatus(Product.Status status) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> p = new TreeSet<>();
+        for (Product pr : s.products) {
+            switch (status) {
+                case AVAILABLE:
+                    if (pr.getStatus().equals(Product.Status.AVAILABLE)) {
+                        p.add(pr);
+                    }
+                    break;
+                case RESERVED:
+                    if (pr.getStatus().equals(Product.Status.RESERVED)) {
+                        p.add(pr);
+                    }
+                    break;
+                default:
+                    p.addAll(s.products);
+                    break;
+
+            }
+        }
+        return p;
     }
 
     @Override
@@ -132,7 +198,7 @@ public class AppController implements IAppController{
 
     @Override
     public boolean createProduct(String name, String description, double prize) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.   
     }
 
     @Override
@@ -229,5 +295,5 @@ public class AppController implements IAppController{
     public boolean saveAllDDBB() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

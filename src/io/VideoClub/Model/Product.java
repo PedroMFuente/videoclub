@@ -6,7 +6,7 @@
 package io.VideoClub.Model;
 import java.util.UUID;
 
-public abstract class Product extends Item implements Cloneable {
+public abstract class Product extends Item implements Cloneable, Comparable<Product> {
 
     public enum Status {
         AVAILABLE,
@@ -66,5 +66,13 @@ public abstract class Product extends Item implements Cloneable {
     public String toString() {
         return super.toString() + "status=" + status + '}';
     }
+
+    @Override
+    public int compareTo(Product o) {
+         
+    }
+
+    
+    
 
 }

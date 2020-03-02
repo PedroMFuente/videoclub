@@ -1,7 +1,7 @@
 package io.VideoClub.Model.Enums;
 
 public enum GameCategory {
-    Adeventures,
+    Adventures,
     Cars,
     Shooter
 }

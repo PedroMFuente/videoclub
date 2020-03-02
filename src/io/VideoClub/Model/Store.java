@@ -5,8 +5,9 @@
  */
 package io.VideoClub.Model;
 
-import java.util.HashSet;
+
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -14,10 +15,10 @@ import java.util.Set;
  */
 public class Store {
    private static Store instance = null;
-    Set<Product> products;
+    public Set<Product> products;
 
     private Store() {
-        products = new HashSet<>();
+        products = new TreeSet<>();
     }
     public static Store getInstance(){
         if(instance == null){

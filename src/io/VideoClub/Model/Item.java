@@ -1,7 +1,7 @@
 package io.VideoClub.Model;
 
 
-public abstract class Item {
+public abstract class Item  {
      protected String name;
      protected String description;
      protected double prize;
