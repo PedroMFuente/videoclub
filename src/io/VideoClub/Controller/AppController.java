@@ -203,14 +203,12 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean createMovie(ProductsTypes type, String name, String description, MovieCategory cat, int minAge) {
-        GUI control = new GUI();
-        double precio = control.crearPrecio();
+    public boolean createMovie(ProductsTypes type, String name, String description,double precio, MovieCategory cat, int minAge) {
         return s.products.add(new Movie( name,  description, precio, cat,  minAge));
     }
 
     @Override
-    public boolean createGame(ProductsTypes type, String name, String description, GameCategory cat, int minAge) {
+    public boolean createGame(ProductsTypes type, String name, String description, double precio, GameCategory cat, int minAge) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

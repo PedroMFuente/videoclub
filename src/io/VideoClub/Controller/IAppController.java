@@ -47,8 +47,8 @@ public interface IAppController {
     Map<IClient,Double> resumeAllIncomingsByClient();
     
     boolean createProduct(String name, String description,double prize);
-    boolean createMovie(ProductsTypes type,String name, String description, MovieCategory cat,int minAge);
-    boolean createGame(ProductsTypes type, String name, String description, GameCategory cat,int minAge);
+    boolean createMovie(ProductsTypes type,String name, String description,double precio, MovieCategory cat,int minAge);
+    boolean createGame(ProductsTypes type, String name, String description,double precio, GameCategory cat,int minAge);
     
     boolean createClient(String id,String name,String phone,LocalDateTime time);
     boolean removeClient(String id);  //if has reservations cant be deleted
