@@ -83,8 +83,4 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
     public int compareTo(Product o) {
          
     }
-
-    
-    
-
 }

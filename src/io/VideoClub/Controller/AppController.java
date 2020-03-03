@@ -203,18 +203,18 @@ public class AppController implements IAppController {
     }
 
     @Override
-    public boolean createProduct(String name, String description, double prize) {
+    public boolean createProduct(String name, String description, double prize) { //otros
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.   
     }
 
     @Override
-    public boolean createMovie(ProductsTypes type, String name, String description,double precio, MovieCategory cat, int minAge) {
+    public boolean createMovie(ProductsTypes type, String name, String description, double precio, MovieCategory cat, int minAge) {
         return s.products.add(new Movie( name,  description, precio, cat,  minAge));
     }
 
     @Override
     public boolean createGame(ProductsTypes type, String name, String description, double precio, GameCategory cat, int minAge) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.products.add(new Game( name,  description, precio, cat,  minAge));
     }
 
     @Override

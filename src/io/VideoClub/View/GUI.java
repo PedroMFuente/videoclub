@@ -7,7 +7,7 @@ import io.VideoClub.Model.Enums.ProductsTypes;
 import java.util.Scanner;
 
 public class GUI {
-
+            AppController control = new AppController();
     public static void principal(int teclado) {
         int opcion;
         opcion = teclado;
@@ -87,19 +87,24 @@ public class GUI {
     }
 
     public void menucreateproduct() {
-        AppController control = new AppController();
         System.out.println("Tipo de producto : ");
-        System.out.println("1)peli \n2)juego \n3)otro");
+        System.out.println("1)peli \n 2)juego \n 3)otro");
         int categoria = teclado();
+        
         System.out.println("Nombre");
         String nombre = tecladoS();
+        
         System.out.println("descripción");
         String descripcion = tecladoS();
+        
+        System.out.println("Insertar precio:");
+        double precio = tecladoD();
+        
         switch (categoria) {
             case 1:
                 System.out.println("Creando Película : ");
                 System.out.println("movie category");
-                System.out.println("1)Horror, 2)love, 3)action, 4)SciFi");
+                System.out.println("1)Horror \n 2)love \n 3)action \n 4)SciFi");
                 int categoriaP = teclado();
                 MovieCategory categoriaPelicula = MovieCategory.Horror;
                 switch(categoriaP){
@@ -117,22 +122,37 @@ public class GUI {
                         break;
                 }
                 System.out.println("edad minima");
-                int edad = teclado();
-                control.createMovie(ProductsTypes.Peliculas, nombre, descripcion, categoriaPelicula, edad);
+                int edadP = teclado();
+                control.createMovie(ProductsTypes.Peliculas, nombre, descripcion, precio, categoriaPelicula, edadP);
                 break;
             case 2:
-                //enum categoria product
-                System.out.println("juego");
+                System.out.println("Creando Juego : ");
+                
+                System.out.println("Categoría del juego: ");
+                System.out.println("1)Adventures \n 2)Cars \n 3)Shooter");
+                int categoriaJ = teclado();
+                GameCategory categoriaJuego= GameCategory.Adventures;
+                switch(categoriaJ){
+                    case 1:
+                        categoriaJuego = GameCategory.Adventures;
+                        break;
+                    case 2:
+                        categoriaJuego = GameCategory.Cars;
+                        break;
+                    case 3:
+                        categoriaJuego = GameCategory.Shooter;
+                        break;
+                }
+                System.out.println("edad minima");
+                int edadJ = teclado();
+                control.createGame(ProductsTypes.Juegos, nombre, descripcion, precio, categoriaJuego, edadJ);
+                break;
             case 3:
                 //enum categoria product
                 System.out.println("otros");
-                System.out.println("Nombre");
+                control.createProduct(nombre, descripcion, precio);
+                break;
         }
-    }
-    public double crearPrecio(){
-        System.out.println("Introduzca precio:");
-        double precio = tecladoD();
-        return precio;
     }
     public int teclado() {
         int result = 0;
