@@ -1,5 +1,9 @@
 package io.VideoClub.View;
 
+import io.VideoClub.Controller.AppController;
+import io.VideoClub.Model.Enums.GameCategory;
+import io.VideoClub.Model.Enums.MovieCategory;
+import io.VideoClub.Model.Enums.ProductsTypes;
 import java.util.Scanner;
 
 public class GUI {
@@ -82,11 +86,92 @@ public class GUI {
         }
     }
 
+    public void menucreateproduct() {
+        AppController control = new AppController();
+        System.out.println("Tipo de producto : ");
+        System.out.println("1)peli \n2)juego \n3)otro");
+        int categoria = teclado();
+        System.out.println("Nombre");
+        String nombre = tecladoS();
+        System.out.println("descripción");
+        String descripcion = tecladoS();
+        switch (categoria) {
+            case 1:
+                System.out.println("Creando Película : ");
+                System.out.println("movie category");
+                System.out.println("1)Horror, 2)love, 3)action, 4)SciFi");
+                int categoriaP = teclado();
+                MovieCategory categoriaPelicula = MovieCategory.Horror;
+                switch(categoriaP){
+                    case 1:
+                        categoriaPelicula = MovieCategory.Horror;
+                        break;
+                    case 2:
+                        categoriaPelicula = MovieCategory.Love;
+                        break;
+                    case 3:
+                        categoriaPelicula = MovieCategory.Action;
+                        break;
+                    case 4:
+                        categoriaPelicula = MovieCategory.SciFi;
+                        break;
+                }
+                System.out.println("edad minima");
+                int edad = teclado();
+                control.createMovie(ProductsTypes.Peliculas, nombre, descripcion, categoriaPelicula, edad);
+                break;
+            case 2:
+                //enum categoria product
+                System.out.println("juego");
+            case 3:
+                //enum categoria product
+                System.out.println("otros");
+                System.out.println("Nombre");
+        }
+    }
+    public double crearPrecio(){
+        System.out.println("Introduzca precio:");
+        double precio = tecladoD();
+        return precio;
+    }
     public int teclado() {
-        int result;
+        int result = 0;
+        boolean salir = false;
         Scanner teclado = new Scanner(System.in);
-        result = teclado.nextInt();
+        while (!salir) {
+            try {
+                result = teclado.nextInt();
+                salir = true;
+            } catch (Exception e) {
+                System.out.println("Error");
+                teclado = new Scanner(System.in);
+            }
+        }
+
         return result;
+    }
+
+    public double tecladoD() {
+        double result = 0;
+        boolean salir = false;
+        Scanner teclado = new Scanner(System.in);
+        while (!salir) {
+            try {
+                result = teclado.nextDouble();
+                salir = true;
+            } catch (Exception e) {
+                System.out.println("Error");
+                teclado = new Scanner(System.in);
+            }
+        }
+        return result;
+    }
+
+    public String tecladoS() {
+        String texto;
+        Scanner teclado = new Scanner(System.in);
+        texto = teclado.next();
+        return texto;
     }
 
 }

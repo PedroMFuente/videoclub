@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package io.VideoClub.Model;
+import io.VideoClub.Model.Enums.ProductsTypes;
+import static io.VideoClub.Model.Enums.ProductsTypes.Otros;
 import java.util.UUID;
 
 public abstract class Product extends Item implements Cloneable, Comparable<Product> {
@@ -14,11 +16,13 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
     }
     protected String key;
     protected Status status;
+    protected ProductsTypes type;
 
     public Product() {}
 
     public Product(String name, String description, double prize) {
         super(name, description, prize);
+        this.type=Otros;
         this.key = generateRandom16Chars();
     }
 

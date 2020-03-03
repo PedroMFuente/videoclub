@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import io.VideoClub.Model.Movie;
 import io.VideoClub.Model.Game;
 import io.VideoClub.Model.Otros;
+import io.VideoClub.View.GUI;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -203,7 +204,9 @@ public class AppController implements IAppController {
 
     @Override
     public boolean createMovie(ProductsTypes type, String name, String description, MovieCategory cat, int minAge) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        GUI control = new GUI();
+        double precio = control.crearPrecio();
+        return s.products.add(new Movie( name,  description, precio, cat,  minAge));
     }
 
     @Override
