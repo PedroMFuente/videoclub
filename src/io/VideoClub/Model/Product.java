@@ -42,6 +42,14 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
         return status;
     }
 
+    public ProductsTypes getType() {
+        return type;
+    }
+
+    public void setType(ProductsTypes type) {
+        this.type = type;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }

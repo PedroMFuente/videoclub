@@ -45,7 +45,12 @@ public class AppController implements IAppController {
     @Override
     public Set<Product> listAllByType(ProductsTypes type) {
         Set<Product> p = new TreeSet<>();
-        for (Product pr : s.products) {
+        for(Product aux:s.products){
+            if(aux.getType().equals(type)){
+                p.add(aux);
+            }
+        }
+        /*for (Product pr : s.products) {
             switch (type) {
                 case Peliculas:
                     if (pr instanceof Movie) {
@@ -67,7 +72,7 @@ public class AppController implements IAppController {
                     break;
 
             }
-        }
+        }*/
         return p;
     }
 
