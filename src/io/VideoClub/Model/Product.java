@@ -81,6 +81,6 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
 
     @Override
     public int compareTo(Product o) {
-         
+         return this.name.compareTo(o.getName());
     }
 }

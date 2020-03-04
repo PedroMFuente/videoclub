@@ -4,6 +4,7 @@ import io.VideoClub.Controller.AppController;
 import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class GUI {
@@ -153,6 +154,21 @@ public class GUI {
                 control.createProduct(nombre, descripcion, precio);
                 break;
         }
+    }
+    
+    public void createClient(){
+        //ID haremos una funcion aleatoria seguramente
+        System.out.println("Introduce el ID del cliente");
+        String idC = tecladoS();
+        
+        System.out.println("Introduce el nombre");
+        String nameC = tecladoS();
+        
+        System.out.println("Introduce numero de telefono");
+        String phoneC = tecladoS();
+        
+        control.createClient(idC, nameC, phoneC, LocalDateTime.now());
+        
     }
     public int teclado() {
         int result = 0;

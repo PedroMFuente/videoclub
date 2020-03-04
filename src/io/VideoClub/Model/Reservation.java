@@ -16,6 +16,12 @@ public class Reservation {
     public LocalDate finished;
     public StatusReserve status;
 
+    public StatusReserve getStatus() {
+        return status;
+    }
+
+   
+    
    
     
     private Reservation(){};
@@ -46,4 +52,10 @@ public class Reservation {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" + "pro=" + pro + ", cli=" + cli + ", ini=" + ini + ", end=" + end + ", finished=" + finished + ", status=" + status + '}';
+    }
+    
 }

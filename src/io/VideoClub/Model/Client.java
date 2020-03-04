@@ -6,6 +6,7 @@
 package io.VideoClub.Model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -16,6 +17,16 @@ public class Client implements IClient {
     private String name;
     private LocalDateTime time;
     private String phone;
+   
+
+    public Client(String ID, String name, String phone, LocalDateTime time) {
+        this.ID = ID;
+        this.name = name;
+        this.phone = phone;
+        this.time = time;
+    }
+
+      
 
     @Override
     public String getID() {
@@ -50,6 +61,36 @@ public class Client implements IClient {
     @Override
     public void setPhone(String p) {
         this.phone = p;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Client other = (Client) obj;
+        if (!Objects.equals(this.ID, other.ID)) {
+            return false;
+        }
+        return true;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "Client{" + "ID=" + ID + ", name=" + name + ", time=" + time + ", phone=" + phone + '}';
     }
     
 }

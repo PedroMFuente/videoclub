@@ -16,6 +16,8 @@ import java.util.TreeSet;
 public class Store {
    private static Store instance = null;
     public Set<Product> products;
+    public Set<IClient> clients;
+    public Set<Reservation> reserves;
 
     private Store() {
         products = new TreeSet<>();

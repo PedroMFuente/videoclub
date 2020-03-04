@@ -5,6 +5,7 @@
  */
 package io.VideoClub.Controller;
 
+import io.VideoClub.Model.Client;
 import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
@@ -16,12 +17,13 @@ import java.time.LocalDate;
 import io.VideoClub.Model.Movie;
 import io.VideoClub.Model.Game;
 import io.VideoClub.Model.Otros;
-import io.VideoClub.View.GUI;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -45,8 +47,8 @@ public class AppController implements IAppController {
     @Override
     public Set<Product> listAllByType(ProductsTypes type) {
         Set<Product> p = new TreeSet<>();
-        for(Product aux:s.products){
-            if(aux.getType().equals(type)){
+        for (Product aux : s.products) {
+            if (aux != null && aux.getType().equals(type)) {
                 p.add(aux);
             }
         }
@@ -80,7 +82,7 @@ public class AppController implements IAppController {
     public Set<Product> listAllByName(String name) {
         Set<Product> p = new TreeSet<>();
         for (Product pr : s.products) {
-            if (name.equals(pr.getName())) {
+            if (pr != null && name.equals(pr.getName())) {
                 p.add(pr);
             }
         }
@@ -106,80 +108,112 @@ public class AppController implements IAppController {
     @Override
     public Set<Product> listAllByStatus(Product.Status status) {
         Set<Product> p = new TreeSet<>();
-        for (Product pr : s.products) {
-            switch (status) {
-                case AVAILABLE:
-                    if (pr.getStatus().equals(Product.Status.AVAILABLE)) {
-                        p.add(pr);
-                    }
-                    break;
-                case RESERVED:
-                    if (pr.getStatus().equals(Product.Status.RESERVED)) {
-                        p.add(pr);
-                    }
-                    break;
-                default:
-                    p.addAll(s.products);
-                    break;
 
+        for (Product pr : s.products) {
+            if (pr != null && pr.getStatus().equals(status)) {
+                p.add(pr);
             }
         }
+
         return p;
     }
 
     @Override
     public List<Product> listAllDifferentProducts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> p = listAllByType(ProductsTypes.Otros);
+        List<Product> list = new ArrayList<>();
+        list.addAll(p);
+        return list;
     }
 
     @Override
     public List<Product> listAllDifferentMovies() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> p = listAllByType(ProductsTypes.Peliculas);
+        List<Product> list = new ArrayList<>();
+        list.addAll(p);
+        return list;
     }
 
     @Override
     public List<Product> listAllDifferentGames() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Product> p = listAllByType(ProductsTypes.Juegos);
+        List<Product> list = new ArrayList<>();
+        list.addAll(p);
+        return list;
     }
 
     @Override
     public Map<Product, Integer> listAllAmountOfProducts(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int cont = 0;
+        Map<Product, Integer> aux = new TreeMap<>();
+        Product aux2 = null;
+
+        for (Product pr : s.products) {
+            if (pr != null && pr.getName().equals(name)) {
+                if (aux2 == null) {
+                    aux2 = pr;
+                }
+                cont++;
+            }
+        }
+        aux.put(aux2, cont);
+        return aux;
+
     }
 
     @Override
     public Map<Product, Integer> listAllAmountOfProducts(ProductsTypes type, String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int cont = 0;
+        Map<Product, Integer> aux = new TreeMap<>();
+        Product aux2 = null;
+
+        for (Product pr : s.products) {
+            if (pr != null && pr.getName().equals(name) && pr.getType().equals(type)) {
+                if (aux2 == null) {
+                    aux2 = pr;
+                }
+                cont++;
+            }
+        }
+        aux.put(aux2, cont);
+        return aux;
     }
 
     @Override
     public Set<IClient> listAllClients() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.clients;
     }
 
     @Override
     public Set<IClient> listAllClients(Comparator c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.clients;
     }
 
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Set<Reservation> listAllReservations() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.reserves;
     }
 
     @Override
     public Set<Reservation> listAllReservations(Comparator c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.reserves;
     }
 
     @Override
     public Set<Reservation> listAllReservations(Reservation.StatusReserve status) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Reservation> r = new TreeSet<>();
+
+        for (Reservation aux : s.reserves) {
+            if (aux.getStatus().equals(status)) {
+                r.add(aux);              
+            }
+        }
+        return r;
     }
 
     @Override
@@ -204,32 +238,50 @@ public class AppController implements IAppController {
 
     @Override
     public boolean createProduct(String name, String description, double prize) { //otros
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.   
+        return s.products.add(new Otros(name, description, prize));
     }
 
     @Override
     public boolean createMovie(ProductsTypes type, String name, String description, double precio, MovieCategory cat, int minAge) {
-        return s.products.add(new Movie( name,  description, precio, cat,  minAge));
+        return s.products.add(new Movie(name, description, precio, cat, minAge));
     }
 
     @Override
     public boolean createGame(ProductsTypes type, String name, String description, double precio, GameCategory cat, int minAge) {
-        return s.products.add(new Game( name,  description, precio, cat,  minAge));
+        return s.products.add(new Game(name, description, precio, cat, minAge));
     }
 
     @Override
     public boolean createClient(String id, String name, String phone, LocalDateTime time) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.clients.add(new Client(id, name, phone, time));
     }
 
     @Override
     public boolean removeClient(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean result = false;
+
+        for (IClient c : s.clients) {
+            if (c != null && c.getID().equals(id)) {
+                s.clients.remove(c);
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean editClient(IClient e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean result = false;
+
+        for (IClient c : s.clients) {
+            if (c != null && c.equals(e)) {
+                // ¿ PEDIR DATOS CLIENTE AQUI ?
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
@@ -239,22 +291,50 @@ public class AppController implements IAppController {
 
     @Override
     public boolean removeProduct(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean result = false;
+
+        for (Product p : s.products) {
+            if (p != null && p.getName().equals(name)) {
+                s.products.remove(p);
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 
     @Override
     public boolean editProduct(String key, Product newP) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean result = false;
+
+        for (Product p : s.products) {
+            if (p != null && p.getKey().equals(key)) {
+                // ¿PEDIR DATOS PRODUCTO AQUI?
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 
     @Override
     public Product isAvailableProduct(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Product p = null;
+
+        for (Product pr : s.products) {
+            if (pr != null && p.getName().equals(name) && p.getStatus().equals(Product.Status.AVAILABLE)) {
+                p = pr;
+                break;
+            }
+        }
+        return p;
     }
 
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return s.reserves.add(new Reservation(prod, client));
     }
 
     @Override
@@ -279,7 +359,7 @@ public class AppController implements IAppController {
 
     @Override
     public boolean loadAllDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return loadCatalogFromDDBB() && loadClientsFromDDBB() && loadReservationsFromDDBB();
     }
 
     @Override
@@ -299,7 +379,7 @@ public class AppController implements IAppController {
 
     @Override
     public boolean saveAllDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return saveCatalogFromDDBB() && saveClientsFromDDBB() && saveReservationsFromDDBB();
     }
 
 }
