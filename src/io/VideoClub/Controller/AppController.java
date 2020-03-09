@@ -188,7 +188,9 @@ public class AppController implements IAppController {
 
     @Override
     public Set<IClient> listAllClients(Comparator c) {
-        return s.clients;
+        Set<IClient> ordenado= new TreeSet<>(c);
+        ordenado.addAll(s.clients);
+        return ordenado;
     }
 
     @Override
@@ -203,7 +205,9 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Reservation> listAllReservations(Comparator c) {
-        return s.reserves;
+        Set<Reservation> ordenado= new TreeSet<>(c);
+        ordenado.addAll(s.reserves);
+        return ordenado;
     }
 
     @Override

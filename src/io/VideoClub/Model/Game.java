@@ -14,6 +14,7 @@ public class Game extends Product{
         this.minAge = minAge;
     }
 
+   
     public GameCategory getCategory() {
         return category;
     }
