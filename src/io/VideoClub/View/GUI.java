@@ -4,14 +4,16 @@ import io.VideoClub.Controller.AppController;
 import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
+import io.VideoClub.Model.Product;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.Set;
 
 public class GUI {
-            AppController control = new AppController();
-    public static void principal(int teclado) {
-        int opcion;
-        opcion = teclado;
+    static AppController control = new AppController();
+    
+    public static void principal() {
+        int opcion = teclado();
         menuI1(opcion);
         System.out.println("1)Crear producto");
         System.out.println("2)Editar producto");
@@ -39,18 +41,18 @@ public class GUI {
         System.out.println("3)Ordenar por Género");
     }
 
-    public static void menuI1(int opcion) {
+    private static void menuI1(int opcion) {
         switch (opcion) {
             case 1: {
-                addProduct();
+                control.addProduct("hola"); //recibe string name
 
             }
             case 2: {
-                editProduct();
+                control.editProduct(); //recibe String key, Product newP
 
             }
             case 3: {
-                listAllProduct();
+               control.listAllProducts(); //devuelve un lista set
             }
 
         }
@@ -60,11 +62,11 @@ public class GUI {
         switch (opcion) {
 
             case 1: {
-                removeProduct();
+                control.removeProduct();//recibe string name
 
             }
             case 2: {
-                reserveProduct();
+                control.reserveProduct();// recibe Product prod, IClient client
             }
 
         }
@@ -73,15 +75,15 @@ public class GUI {
     public void menuI3(int opcion) {
         switch (opcion) {
             case 1: {
-                listAllByName();
+                control.listAllByName();//devuelve lista set
 
             }
             case 2: {
-                listAllByType();
+                control.listAllByType();//devuelve lista set
 
             }
             case 3: {
-                ListAllByStatus();
+                control.listAllByStatus();//devuelve lista set
             }
 
         }
@@ -167,10 +169,11 @@ public class GUI {
         System.out.println("Introduce numero de telefono");
         String phoneC = tecladoS();
         
-        control.createClient(idC, nameC, phoneC, LocalDateTime.now());
-        
+        control.createClient(idC, nameC, phoneC, LocalDateTime.now());    
     }
-    public int teclado() {
+    
+    
+    public static int teclado() {
         int result = 0;
         boolean salir = false;
         Scanner teclado = new Scanner(System.in);
