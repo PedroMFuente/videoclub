@@ -41,7 +41,9 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Product> listAllProducts(Comparator c) {
-        return s.products;
+        Set<Product> ordenado= new TreeSet<>(c);
+        ordenado.addAll(s.products);
+        return ordenado;
     }
 
     @Override
@@ -191,7 +193,7 @@ public class AppController implements IAppController {
 
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -210,7 +212,7 @@ public class AppController implements IAppController {
 
         for (Reservation aux : s.reserves) {
             if (aux.getStatus().equals(status)) {
-                r.add(aux);              
+                r.add(aux);
             }
         }
         return r;
@@ -307,15 +309,19 @@ public class AppController implements IAppController {
     @Override
     public boolean editProduct(String key, Product newP) {
         boolean result = false;
-
-        for (Product p : s.products) {
-            if (p != null && p.getKey().equals(key)) {
-                // ¿PEDIR DATOS PRODUCTO AQUI?
-                result = true;
-                break;
+        if (newP != null) {
+            for (Product p : s.products) {
+                if (p.getKey().equals(key)) {
+                    p.setName(newP.getName());
+                    p.setDescription(newP.getDescription());
+                    p.setPrize(newP.getPrize());
+                    p.setStatus(newP.getStatus());
+                    p.setType(newP.getType());
+                    result = true;
+                    break;
+                }
             }
         }
-
         return result;
     }
 
