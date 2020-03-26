@@ -16,7 +16,7 @@ import io.VideoClub.Model.Store;
 import java.time.LocalDate;
 import io.VideoClub.Model.Movie;
 import io.VideoClub.Model.Game;
-import io.VideoClub.Model.Otros;
+import io.VideoClub.Model.Others;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,7 +41,7 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Product> listAllProducts(Comparator c) {
-        Set<Product> ordenado= new TreeSet<>(c);
+        Set<Product> ordenado = new TreeSet<>(c);
         ordenado.addAll(s.products);
         return ordenado;
     }
@@ -149,18 +149,18 @@ public class AppController implements IAppController {
         int cont = 0;
         Map<Product, Integer> aux = new TreeMap<>();
         Product aux2 = null;
-
-        for (Product pr : s.products) {
-            if (pr != null && pr.getName().equals(name)) {
-                if (aux2 == null) {
-                    aux2 = pr;
+        if (name != null) {
+            for (Product pr : s.products) {
+                if (pr != null && pr.getName().equals(name)) {
+                    if (aux2 == null) {
+                        aux2 = pr;
+                    }
+                    cont++;
                 }
-                cont++;
             }
+            aux.put(aux2, cont);
         }
-        aux.put(aux2, cont);
         return aux;
-
     }
 
     @Override
@@ -188,7 +188,7 @@ public class AppController implements IAppController {
 
     @Override
     public Set<IClient> listAllClients(Comparator c) {
-        Set<IClient> ordenado= new TreeSet<>(c);
+        Set<IClient> ordenado = new TreeSet<>(c);
         ordenado.addAll(s.clients);
         return ordenado;
     }
@@ -205,7 +205,7 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Reservation> listAllReservations(Comparator c) {
-        Set<Reservation> ordenado= new TreeSet<>(c);
+        Set<Reservation> ordenado = new TreeSet<>(c);
         ordenado.addAll(s.reserves);
         return ordenado;
     }
@@ -244,7 +244,7 @@ public class AppController implements IAppController {
 
     @Override
     public boolean createProduct(String name, String description, double prize) { //otros
-        return s.products.add(new Otros(name, description, prize));
+        return s.products.add(new Others(name, description, prize));
     }
 
     @Override
@@ -266,12 +266,15 @@ public class AppController implements IAppController {
     public boolean removeClient(String id) {
         boolean result = false;
 
-        for (IClient c : s.clients) {
-            if (c != null && c.getID().equals(id)) {
-                s.clients.remove(c);
-                result = true;
-                break;
+        if (id != null) {
+            for (IClient c : s.clients) {
+                if (c != null && c.getID().equals(id)) {
+                    s.clients.remove(c);
+                    result = true;
+                    break;
+                }
             }
+
         }
         return result;
     }
@@ -279,13 +282,17 @@ public class AppController implements IAppController {
     @Override
     public boolean editClient(IClient e) {
         boolean result = false;
-
-        for (IClient c : s.clients) {
-            if (c != null && c.equals(e)) {
-                // ¿ PEDIR DATOS CLIENTE AQUI ?
-                result = true;
-                break;
+        if (e != null) {
+            for (IClient c : s.clients) {
+                if (c != null && c.equals(e)) {
+                    c.setName("");
+                    c.setPhone("");
+                    c.setTime(LocalDateTime.now());
+                    result = true;
+                    break;
+                }
             }
+
         }
         return result;
     }
@@ -344,7 +351,12 @@ public class AppController implements IAppController {
 
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
-        return s.reserves.add(new Reservation(prod, client));
+        if (prod != null && client != null) {
+            return s.reserves.add(new Reservation(prod, client));
+        } else {
+            return false;
+        }
+
     }
 
     @Override

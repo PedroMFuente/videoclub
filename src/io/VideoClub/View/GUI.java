@@ -1,10 +1,17 @@
 package io.VideoClub.View;
 
+import io.VideoClub.Comparators.ClientComparator;
+import io.VideoClub.Comparators.ProductComparator;
+import io.VideoClub.Comparators.ReservationComparator;
 import io.VideoClub.Controller.AppController;
+import io.VideoClub.Model.Client;
 import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
+import io.VideoClub.Model.Enums.SortOptions;
+import io.VideoClub.Model.IClient;
 import io.VideoClub.Model.Product;
+import io.VideoClub.Model.Reservation;
 import io.VideoClub.Model.Store;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -14,7 +21,11 @@ public class GUI {
 
     static AppController control = new AppController();
     static Store s = Store.getInstance();
-
+    
+    private ProductComparator productComparator;
+    private ReservationComparator reservationComparator;
+    private ClientComparator clientComparator;
+    
     public static void principal() {
         boolean salir = false;
         while (!salir) {
@@ -32,6 +43,130 @@ public class GUI {
 
         }
     }
+
+    public void sortClient() {
+        SortOptions result = null;
+        int opcion = 0;
+        do {
+            System.out.println("-----Ordenar Clientes-----");
+            System.out.println("1)Ordenar de la A la Z a los clientes ");
+            System.out.println("2)Ordenar de la Z a la A a los clientes");
+            System.out.println("3)Ordenar por telefono a los clientes");
+            System.out.println("4)Ordenar ID de menor a mayor a los clientes");
+            System.out.println("5)Ordenar ID de mayor a menor a los clientes");
+            opcion = teclado();
+        } while (opcion < 1 || opcion > 5);
+        switch (opcion) {
+            case 1:
+                result = SortOptions.AToZC;
+                clientComparator.setOption(result);
+                break;
+            case 2:
+                result = SortOptions.AToZP;
+                clientComparator.setOption(result);
+                break;
+            case 3:
+                result = SortOptions.Phone;
+                clientComparator.setOption(result);
+                break;
+            case 4:
+                result = SortOptions.IDMinToMax;
+                clientComparator.setOption(result);
+                break;
+            case 5:
+                result = SortOptions.IDMaxToMin;
+                clientComparator.setOption(result);
+                break;
+            default:
+                break;
+        }
+        Set<IClient> muestra = control.listAllClients(new ClientComparator());
+        for(IClient c : muestra){
+            System.out.println(c);
+        }
+    }
+
+    public void sortProduct() {
+        SortOptions result = null;
+        int opcion = 0;
+        do {
+            System.out.println("-----Ordenar Productos-----");
+            System.out.println("1)Ordenar de la A la Z a los productos");
+            System.out.println("2)Ordenar de la Z a la A a los productos");
+            opcion = teclado();
+        } while (opcion < 1 || opcion > 2);
+        switch (opcion) {
+            case 1:
+                result = SortOptions.AToZP;
+                productComparator.setOption(result);
+                break;
+            case 2:
+                result = SortOptions.ZtoAP;
+                productComparator.setOption(result);
+                break;
+            default:
+                break;
+        }
+        Set<Product> muestra = control.listAllProducts(new ProductComparator());
+        for(Product p : muestra){
+            System.out.println(p);
+        }
+        
+    }
+
+    public void sortReservation() {
+        SortOptions result = null;
+        int opcion = 0;
+        do {
+            System.out.println("-----Ordenar Reservas-----");
+            System.out.println("1)Ordenar de la A la Z a los clientes ");
+            System.out.println("2)Ordenar de la Z a la A a los clientes");
+            System.out.println("3)Ordenar por telefono a los clientes");
+            System.out.println("4)Ordenar ID de menor a mayor a los clientes");
+            System.out.println("5)Ordenar ID de mayor a menor a los clientes");
+            System.out.println("6)Ordenar de la A la Z a los productos");
+            System.out.println("7)Ordenar de la Z a la A a los productos");
+            opcion = teclado();
+        } while (opcion < 1 || opcion > 7);
+        switch (opcion) {
+            case 1:
+                result = SortOptions.AToZC;
+                reservationComparator.setOption(result);
+                break;
+            case 2:
+                result = SortOptions.AToZP;
+                reservationComparator.setOption(result);
+                break;
+            case 3:
+                result = SortOptions.Phone;
+                reservationComparator.setOption(result);
+                break;
+            case 4:
+                result = SortOptions.IDMinToMax;
+                reservationComparator.setOption(result);
+                break;
+            case 5:
+                result = SortOptions.IDMaxToMin;
+                reservationComparator.setOption(result);
+                break;
+            case 6:
+                result = SortOptions.AToZP;
+                reservationComparator.setOption(result);
+                break;
+            case 7:
+                result = SortOptions.ZtoAP;
+                reservationComparator.setOption(result);
+                break;
+            default:
+                break;
+
+        }
+        Set<Reservation> muestra = control.listAllReservations(new ReservationComparator());
+        for(Reservation r : muestra){
+            System.out.println(r);
+        }
+    }
+    
 
     public void edita(int teclado) {
 
