@@ -27,6 +27,6 @@ public class RepositoryProduct {
         }
         return instance;
     }
-    
    
+    
 }
