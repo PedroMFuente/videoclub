@@ -4,7 +4,6 @@ import io.VideoClub.Comparators.ClientComparator;
 import io.VideoClub.Comparators.ProductComparator;
 import io.VideoClub.Comparators.ReservationComparator;
 import io.VideoClub.Controller.AppController;
-import io.VideoClub.Model.Client;
 import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
@@ -12,7 +11,6 @@ import io.VideoClub.Model.Enums.SortOptions;
 import io.VideoClub.Model.IClient;
 import io.VideoClub.Model.Product;
 import io.VideoClub.Model.Reservation;
-import io.VideoClub.Model.Store;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.Set;
@@ -20,7 +18,7 @@ import java.util.Set;
 public class GUI {
 
     static AppController control = new AppController();
-    static Store s = Store.getInstance();
+   
     
     private ProductComparator productComparator;
     private ReservationComparator reservationComparator;

@@ -12,11 +12,13 @@ import io.VideoClub.Model.Enums.ProductsTypes;
 import io.VideoClub.Model.IClient;
 import io.VideoClub.Model.Product;
 import io.VideoClub.Model.Reservation;
-import io.VideoClub.Model.Store;
+import io.VideoClub.Model.RepositoryProduct;
 import java.time.LocalDate;
 import io.VideoClub.Model.Movie;
 import io.VideoClub.Model.Game;
 import io.VideoClub.Model.Others;
+import io.VideoClub.Model.RepositoryClient;
+import io.VideoClub.Model.RepositoryReserve;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,29 +34,31 @@ import java.util.TreeSet;
  */
 public class AppController implements IAppController {
 
-    Store s = Store.getInstance();
+    RepositoryProduct pr = RepositoryProduct.getInstance();
+    RepositoryClient cl = RepositoryClient.getInstance();
+    RepositoryReserve re = RepositoryReserve.getInstance();
 
     @Override
     public Set<Product> listAllProducts() {
-        return s.products;
+        return pr.products;
     }
 
     @Override
     public Set<Product> listAllProducts(Comparator c) {
         Set<Product> ordenado = new TreeSet<>(c);
-        ordenado.addAll(s.products);
+        ordenado.addAll(pr.products);
         return ordenado;
     }
 
     @Override
     public Set<Product> listAllByType(ProductsTypes type) {
         Set<Product> p = new TreeSet<>();
-        for (Product aux : s.products) {
+        for (Product aux : pr.products) {
             if (aux != null && aux.getType().equals(type)) {
                 p.add(aux);
             }
         }
-        /*for (Product pr : s.products) {
+        /*for (Product pr : pr.products) {
             switch (type) {
                 case Peliculas:
                     if (pr instanceof Movie) {
@@ -72,7 +76,7 @@ public class AppController implements IAppController {
                     }
                     break;
                 default:
-                    p.addAll(s.products);
+                    p.addAll(pr.products);
                     break;
 
             }
@@ -83,7 +87,7 @@ public class AppController implements IAppController {
     @Override
     public Set<Product> listAllByName(String name) {
         Set<Product> p = new TreeSet<>();
-        for (Product pr : s.products) {
+        for (Product pr : pr.products) {
             if (pr != null && name.equals(pr.getName())) {
                 p.add(pr);
             }
@@ -111,7 +115,7 @@ public class AppController implements IAppController {
     public Set<Product> listAllByStatus(Product.Status status) {
         Set<Product> p = new TreeSet<>();
 
-        for (Product pr : s.products) {
+        for (Product pr : pr.products) {
             if (pr != null && pr.getStatus().equals(status)) {
                 p.add(pr);
             }
@@ -150,7 +154,7 @@ public class AppController implements IAppController {
         Map<Product, Integer> aux = new TreeMap<>();
         Product aux2 = null;
         if (name != null) {
-            for (Product pr : s.products) {
+            for (Product pr : pr.products) {
                 if (pr != null && pr.getName().equals(name)) {
                     if (aux2 == null) {
                         aux2 = pr;
@@ -169,7 +173,7 @@ public class AppController implements IAppController {
         Map<Product, Integer> aux = new TreeMap<>();
         Product aux2 = null;
 
-        for (Product pr : s.products) {
+        for (Product pr : pr.products) {
             if (pr != null && pr.getName().equals(name) && pr.getType().equals(type)) {
                 if (aux2 == null) {
                     aux2 = pr;
@@ -183,13 +187,13 @@ public class AppController implements IAppController {
 
     @Override
     public Set<IClient> listAllClients() {
-        return s.clients;
+        return cl.clients;
     }
 
     @Override
     public Set<IClient> listAllClients(Comparator c) {
         Set<IClient> ordenado = new TreeSet<>(c);
-        ordenado.addAll(s.clients);
+        ordenado.addAll(cl.clients);
         return ordenado;
     }
 
@@ -200,13 +204,13 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Reservation> listAllReservations() {
-        return s.reserves;
+        return re.reserves;
     }
 
     @Override
     public Set<Reservation> listAllReservations(Comparator c) {
         Set<Reservation> ordenado = new TreeSet<>(c);
-        ordenado.addAll(s.reserves);
+        ordenado.addAll(re.reserves);
         return ordenado;
     }
 
@@ -214,7 +218,7 @@ public class AppController implements IAppController {
     public Set<Reservation> listAllReservations(Reservation.StatusReserve status) {
         Set<Reservation> r = new TreeSet<>();
 
-        for (Reservation aux : s.reserves) {
+        for (Reservation aux : re.reserves) {
             if (aux.getStatus().equals(status)) {
                 r.add(aux);
             }
@@ -244,22 +248,22 @@ public class AppController implements IAppController {
 
     @Override
     public boolean createProduct(String name, String description, double prize) { //otros
-        return s.products.add(new Others(name, description, prize));
+        return pr.products.add(new Others(name, description, prize));
     }
 
     @Override
     public boolean createMovie(ProductsTypes type, String name, String description, double precio, MovieCategory cat, int minAge) {
-        return s.products.add(new Movie(name, description, precio, cat, minAge));
+        return pr.products.add(new Movie(name, description, precio, cat, minAge));
     }
 
     @Override
     public boolean createGame(ProductsTypes type, String name, String description, double precio, GameCategory cat, int minAge) {
-        return s.products.add(new Game(name, description, precio, cat, minAge));
+        return pr.products.add(new Game(name, description, precio, cat, minAge));
     }
 
     @Override
     public boolean createClient(String id, String name, String phone, LocalDateTime time) {
-        return s.clients.add(new Client(id, name, phone, time));
+        return cl.clients.add(new Client(id, name, phone, time));
     }
 
     @Override
@@ -267,9 +271,9 @@ public class AppController implements IAppController {
         boolean result = false;
 
         if (id != null) {
-            for (IClient c : s.clients) {
+            for (IClient c : cl.clients) {
                 if (c != null && c.getID().equals(id)) {
-                    s.clients.remove(c);
+                    cl.clients.remove(c);
                     result = true;
                     break;
                 }
@@ -283,7 +287,7 @@ public class AppController implements IAppController {
     public boolean editClient(IClient e) {
         boolean result = false;
         if (e != null) {
-            for (IClient c : s.clients) {
+            for (IClient c : cl.clients) {
                 if (c != null && c.equals(e)) {
                     c.setName("");
                     c.setPhone("");
@@ -306,9 +310,9 @@ public class AppController implements IAppController {
     public boolean removeProduct(String name) {
         boolean result = false;
 
-        for (Product p : s.products) {
+        for (Product p : pr.products) {
             if (p != null && p.getName().equals(name)) {
-                s.products.remove(p);
+                pr.products.remove(p);
                 result = true;
                 break;
             }
@@ -321,7 +325,7 @@ public class AppController implements IAppController {
     public boolean editProduct(String key, Product newP) {
         boolean result = false;
         if (newP != null) {
-            for (Product p : s.products) {
+            for (Product p : pr.products) {
                 if (p.getKey().equals(key)) {
                     p.setName(newP.getName());
                     p.setDescription(newP.getDescription());
@@ -340,7 +344,7 @@ public class AppController implements IAppController {
     public Product isAvailableProduct(String name) {
         Product p = null;
 
-        for (Product pr : s.products) {
+        for (Product pr : pr.products) {
             if (pr != null && p.getName().equals(name) && p.getStatus().equals(Product.Status.AVAILABLE)) {
                 p = pr;
                 break;
@@ -352,7 +356,7 @@ public class AppController implements IAppController {
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
         if (prod != null && client != null) {
-            return s.reserves.add(new Reservation(prod, client));
+            return re.reserves.add(new Reservation(prod, client));
         } else {
             return false;
         }

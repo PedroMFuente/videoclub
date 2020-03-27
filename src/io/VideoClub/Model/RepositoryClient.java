@@ -5,7 +5,6 @@
  */
 package io.VideoClub.Model;
 
-
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,21 +12,17 @@ import java.util.TreeSet;
  *
  * @author migue
  */
-public class Store {
-   private static Store instance = null;
-    public Set<Product> products;
+public class RepositoryClient {
+    private static RepositoryClient instance = null;
     public Set<IClient> clients;
-    public Set<Reservation> reserves;
-
-    private Store() {
-        products = new TreeSet<>();
+    
+    private RepositoryClient() {
+        clients = new TreeSet<>();
     }
-    public static Store getInstance(){
+    public static RepositoryClient getInstance(){
         if(instance == null){
-            instance = new Store();
+            instance = new RepositoryClient();
         }
         return instance;
     }
-    
-   
 }
