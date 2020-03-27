@@ -228,12 +228,34 @@ public class AppController implements IAppController {
 
     @Override
     public double getIncommings() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double result = 0;
+        Set<Reservation> aux = listAllReservations(Reservation.StatusReserve.FINISHED);
+        for (Reservation reserve : aux) {
+            result = result + reserve.pro.getPrize();
+        }
+        Set<Reservation> aux1 = listAllReservations(Reservation.StatusReserve.PENDING);
+        
+        
+        for (Reservation reserve : aux1) {
+            if(reserve.finished.){
+                result = result + 3;
+        }
+        
+        return result;
+
     }
 
     @Override
     public double getIncommings(LocalDate from) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double result = 0;
+        for (Reservation reserve : re.reserves) {
+            if (reserve.end.isEqual(from)) {
+                result =
+            }
+
+        }
+
+        return result;
     }
 
     @Override
