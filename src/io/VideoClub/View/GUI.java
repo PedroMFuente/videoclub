@@ -10,6 +10,9 @@ import io.VideoClub.Model.Enums.ProductsTypes;
 import io.VideoClub.Model.Enums.SortOptions;
 import io.VideoClub.Model.IClient;
 import io.VideoClub.Model.Product;
+import io.VideoClub.Model.RepositoryClient;
+import io.VideoClub.Model.RepositoryProduct;
+import io.VideoClub.Model.RepositoryReserve;
 import io.VideoClub.Model.Reservation;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -18,12 +21,15 @@ import java.util.Set;
 public class GUI {
 
     static AppController control = new AppController();
+    
+    private static RepositoryProduct pr = RepositoryProduct.getInstance();
+    private static RepositoryClient cl = RepositoryClient.getInstance();
+    private static RepositoryReserve re = RepositoryReserve.getInstance();
+    private static ProductComparator productComparator;
+    private static ReservationComparator reservationComparator;
+    private static ClientComparator clientComparator;
 
-    private ProductComparator productComparator;
-    private ReservationComparator reservationComparator;
-    private ClientComparator clientComparator;
-
-    public static void inicio() {
+    public static void principal() {
         int opcion = 0;
 
         do {
@@ -63,7 +69,7 @@ public class GUI {
             System.out.println("3) Listar producto");
             System.out.println("4) Borrar producto");
             System.out.println("5) Salir");
-
+            opcion = teclado();
         } while (opcion < 1 || opcion > 5);
 
         switch (opcion) {
@@ -81,6 +87,11 @@ public class GUI {
                 break;
 
             case 4:
+                removeProduct();
+                break;
+            
+            case 5:
+                
                 break;
 
         }
@@ -90,46 +101,55 @@ public class GUI {
     public static void editProduct() {
         System.out.println("Introduce la KEY del producto");
         String key = tecladoS();
-        control.editProduct(key);         //Hace falta meter un producto
+                //Hace falta meter un producto
     }
 
     public static void client() {
-
-        boolean salir = false;
-        while (!salir) {
+            int opcion = 0;
+            do{       
             System.out.println("1) Crear cliente");
             System.out.println("2) Editar cliente");
             System.out.println("3) Listar cliente");
             System.out.println("4) Borrar cliente");
             System.out.println("5) Salir");
-            int opcion = teclado();
-            if (opcion != 5) {
-                menuI1(opcion);
-            } else {
-                System.out.println("Hasta luego");
-                salir = true;
+            opcion = teclado();
+            }while(opcion < 1 || opcion > 5);
+            
+            switch(opcion){
+                case 1:
+                    createClient();
+                    break;
+                case 2:
+                    editClient();
+                    break;
+                
+                case 3:
+                    listClient();
+                    break;
+                
+                case 4:
+                    removeClient();
+                    break;
+                    
+                case 5:
+                    break;
+                
             }
 
-        }
+        
     }
 
     public static void reserve() {
 
-        boolean salir = false;
-        while (!salir) {
+     
+       
             System.out.println("1) Crear reserva");
             System.out.println("2) Listar reserva");
             System.out.println("3) Terminar reserva");
             System.out.println("4) Salir");
-            int opcion = teclado();
-            if (opcion != 4) {
-                menuI1(opcion);
-            } else {
-                System.out.println("Hasta luego");
-                salir = true;
-            }
+            
 
-        }
+        
     }
 
     public static void sortClient() {
@@ -393,29 +413,38 @@ public class GUI {
 
     }
 
-    public void removeProduct() {
-
+    public static void removeProduct() {
+        Product p = null;
+        System.out.println("Introduce el producto que quieres borrar");
+        String name = tecladoS();
+        p = control.isAvailableProduct(name);
+        if(p!=null){
+            pr.products.remove(p);
+            System.out.println("El producto ha sido borrado con exito");
+        } else {
+            System.out.println("El producto no existe, comprueba que has introducido un nombre correcto");
+        }
     }
 
     public static void createProduct() {
         System.out.println("Tipo de producto : ");
-        System.out.println("1)peli \n 2)juego \n 3)otro");
+        System.out.println("1)Pelicula \n 2)Juego \n 3)Otro");
         int categoria = teclado();
 
-        System.out.println("Nombre");
+        System.out.println("Nombre:");
         String nombre = tecladoS();
 
-        System.out.println("descripción");
+        System.out.println("Descripción: ");
         String descripcion = tecladoS();
 
-        System.out.println("Insertar precio:");
+        System.out.println("Precio:");
         double precio = tecladoD();
 
         switch (categoria) {
             case 1:
-                System.out.println("Creando Película : ");
-                System.out.println("movie category");
-                System.out.println("1)Horror \n 2)love \n 3)action \n 4)SciFi");
+                System.out.println("Creando película : ");
+                System.out.println("Movie Category");
+                System.out.println("1)Horror \n 2)Love \n 3)Action \n 4)SciFi");
                 int categoriaP = teclado();
                 MovieCategory categoriaPelicula = MovieCategory.Horror;
                 switch (categoriaP) {
@@ -432,7 +461,7 @@ public class GUI {
                         categoriaPelicula = MovieCategory.SciFi;
                         break;
                 }
-                System.out.println("edad minima");
+                System.out.println("Edad minima");
                 int edadP = teclado();
                 control.createMovie(ProductsTypes.Peliculas, nombre, descripcion, precio, categoriaPelicula, edadP);
                 break;
@@ -454,13 +483,13 @@ public class GUI {
                         categoriaJuego = GameCategory.Shooter;
                         break;
                 }
-                System.out.println("edad minima");
+                System.out.println("Edad minima");
                 int edadJ = teclado();
                 control.createGame(ProductsTypes.Juegos, nombre, descripcion, precio, categoriaJuego, edadJ);
                 break;
             case 3:
                 //enum categoria product
-                System.out.println("otros");
+                System.out.println("Otros");
                 control.createProduct(nombre, descripcion, precio);
                 break;
         }

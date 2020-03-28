@@ -34,9 +34,9 @@ import java.util.TreeSet;
  */
 public class AppController implements IAppController {
 
-    RepositoryProduct pr = RepositoryProduct.getInstance();
-    RepositoryClient cl = RepositoryClient.getInstance();
-    RepositoryReserve re = RepositoryReserve.getInstance();
+    private RepositoryProduct pr = RepositoryProduct.getInstance();
+    private RepositoryClient cl = RepositoryClient.getInstance();
+    private RepositoryReserve re = RepositoryReserve.getInstance();
 
     @Override
     public Set<Product> listAllProducts() {
@@ -237,12 +237,14 @@ public class AppController implements IAppController {
         
         
         for (Reservation reserve : aux1) {
-            if(reserve.finished.){
+            
                 result = result + 3;
-        }
         
-        return result;
+        
+       
 
+    }
+         return result;
     }
 
     @Override
@@ -250,7 +252,7 @@ public class AppController implements IAppController {
         double result = 0;
         for (Reservation reserve : re.reserves) {
             if (reserve.end.isEqual(from)) {
-                result =
+                
             }
 
         }
