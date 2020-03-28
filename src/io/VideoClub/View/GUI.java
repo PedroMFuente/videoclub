@@ -8,7 +8,10 @@ import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
 import io.VideoClub.Model.Enums.SortOptions;
+import io.VideoClub.Model.Game;
 import io.VideoClub.Model.IClient;
+import io.VideoClub.Model.Movie;
+import io.VideoClub.Model.Others;
 import io.VideoClub.Model.Product;
 import io.VideoClub.Model.RepositoryClient;
 import io.VideoClub.Model.RepositoryProduct;
@@ -100,11 +103,20 @@ public class GUI {
 
     }
 
-    //FALTA
+   
     public static void editProduct() {
-        System.out.println("Introduce la KEY del producto");
+        System.out.println("Introduce la clave del producto que quieres editar");
         String key = u.tecladoS();
-        //Hace falta meter un producto
+        Product p =createProducts();
+        p.setKey(key);
+        if(control.editProduct(key, p)){
+            System.out.println("Producto editado correctamente");
+        } else {
+            System.out.println("Comprueba que la key este correcta");
+        }
+    
+        
+       
     }
 
     public static void client() {
@@ -622,6 +634,78 @@ public class GUI {
                 control.createProduct(nombre, descripcion, precio);
                 break;
         }
+    }
+    
+    public static Product createProducts() {
+        Product p = null;
+    
+        System.out.println("Tipo de producto : ");
+        System.out.println("1)Pelicula \n 2)Juego \n 3)Otro");
+        int categoria = u.tecladoI();
+
+        System.out.println("Nombre:");
+        String nombre = u.tecladoS();
+
+        System.out.println("Descripción: ");
+        String descripcion = u.tecladoS();
+
+        System.out.println("Precio:");
+        double precio = u.tecladoD();
+
+        switch (categoria) {
+            case 1:
+                System.out.println("Creando película : ");
+                System.out.println("Movie Category");
+                System.out.println("1)Horror \n 2)Love \n 3)Action \n 4)SciFi");
+                int categoriaP = u.tecladoI();
+                MovieCategory categoriaPelicula = MovieCategory.Horror;
+                switch (categoriaP) {
+                    case 1:
+                        categoriaPelicula = MovieCategory.Horror;
+                        break;
+                    case 2:
+                        categoriaPelicula = MovieCategory.Love;
+                        break;
+                    case 3:
+                        categoriaPelicula = MovieCategory.Action;
+                        break;
+                    case 4:
+                        categoriaPelicula = MovieCategory.SciFi;
+                        break;
+                }
+                System.out.println("Edad minima");
+                int edadP = u.tecladoI();
+                p = new Movie(nombre, descripcion, precio, categoriaPelicula, edadP);
+                break;
+            case 2:
+                System.out.println("Creando Juego : ");
+
+                System.out.println("Categoría del juego: ");
+                System.out.println("1)Adventures \n 2)Cars \n 3)Shooter");
+                int categoriaJ = u.tecladoI();
+                GameCategory categoriaJuego = GameCategory.Adventures;
+                switch (categoriaJ) {
+                    case 1:
+                        categoriaJuego = GameCategory.Adventures;
+                        break;
+                    case 2:
+                        categoriaJuego = GameCategory.Cars;
+                        break;
+                    case 3:
+                        categoriaJuego = GameCategory.Shooter;
+                        break;
+                }
+                System.out.println("Edad minima");
+                int edadJ = u.tecladoI();
+                p = new Game(nombre, descripcion, precio, categoriaJuego, edadJ);
+                break;
+            case 3:
+                //enum categoria product
+                System.out.println("Otros");
+                p = new Others(nombre, descripcion, precio);
+                break;
+        }
+        return p;
     }
 
     public static void createClient() {
