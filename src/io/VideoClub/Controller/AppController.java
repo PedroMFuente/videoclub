@@ -299,11 +299,10 @@ public class AppController implements IAppController {
     @Override
     public boolean removeClient(String id) {
         boolean result = true;
-        IClient client = null;
 
         if (id != null) {
             for(Reservation r : re.reserves){
-                if(r.getCli().equals(id)){
+                if(r.getCli().getID().equals(id)){
                     result = false;
                     break;
                 }
