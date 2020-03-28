@@ -200,16 +200,16 @@ public class AppController implements IAppController {
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
         Set<IClient> ordenado = new TreeSet<>();
-        
-        for(IClient c: cl.clients){
-            for(Reservation r:re.reserves){
-                if(r.getCli()==c && r.getStatus()!=Reservation.StatusReserve.FINISHED){
+
+        for (IClient c : cl.clients) {
+            for (Reservation r : re.reserves) {
+                if (r.getCli() == c && r.getStatus() != Reservation.StatusReserve.FINISHED) {
                     ordenado.add(c);
                 }
             }
         }
         return ordenado;
-        
+
     }
 
     @Override
@@ -244,17 +244,13 @@ public class AppController implements IAppController {
             result = result + reserve.pro.getPrize();
         }
         Set<Reservation> aux1 = listAllReservations(Reservation.StatusReserve.PENDING);
-        
-        
-        for (Reservation reserve : aux1) {
-            
-                result = result + 3;
-        
-        
-       
 
-    }
-         return result;
+        for (Reservation reserve : aux1) {
+
+            result = result + 3;
+
+        }
+        return result;
     }
 
     @Override
@@ -262,7 +258,7 @@ public class AppController implements IAppController {
         double result = 0;
         for (Reservation reserve : re.reserves) {
             if (reserve.end.isEqual(from)) {
-                
+
             }
 
         }
@@ -300,26 +296,34 @@ public class AppController implements IAppController {
         return cl.clients.add(new Client(id, name, phone, time));
     }
 
-    
-    //FALTA COMPROBAR QUE NO TENGA RESERVAS
     @Override
     public boolean removeClient(String id) {
-        boolean result = false;
+        boolean result = true;
+        IClient client = null;
 
         if (id != null) {
-            for (IClient c : cl.clients) {
-                if (c != null && c.getID().equals(id)) {
-                    cl.clients.remove(c);
-                    result = true;
+            for(Reservation r : re.reserves){
+                if(r.getCli().equals(id)){
+                    result = false;
                     break;
                 }
+            }
+            
+            if (result) {
+                for (IClient c : cl.clients) {
+                    if (c.getID().equals(id)) {
+                        cl.clients.remove(c);
+                        result = true;
+                        break;
+                    }
+                }
+
             }
 
         }
         return result;
     }
 
-    
     //FALTA 
     @Override
     public boolean editClient(IClient e) {
