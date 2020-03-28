@@ -21,7 +21,7 @@ import java.util.Set;
 public class GUI {
 
     static AppController control = new AppController();
-    
+
     private static RepositoryProduct pr = RepositoryProduct.getInstance();
     private static RepositoryClient cl = RepositoryClient.getInstance();
     private static RepositoryReserve re = RepositoryReserve.getInstance();
@@ -89,9 +89,9 @@ public class GUI {
             case 4:
                 removeProduct();
                 break;
-            
+
             case 5:
-                
+
                 break;
 
         }
@@ -101,55 +101,130 @@ public class GUI {
     public static void editProduct() {
         System.out.println("Introduce la KEY del producto");
         String key = tecladoS();
-                //Hace falta meter un producto
+        //Hace falta meter un producto
     }
 
     public static void client() {
-            int opcion = 0;
-            do{       
+        int opcion = 0;
+        do {
             System.out.println("1) Crear cliente");
             System.out.println("2) Editar cliente");
             System.out.println("3) Listar cliente");
             System.out.println("4) Borrar cliente");
             System.out.println("5) Salir");
             opcion = teclado();
-            }while(opcion < 1 || opcion > 5);
-            
-            switch(opcion){
-                case 1:
-                    createClient();
-                    break;
-                case 2:
-                    editClient();
-                    break;
-                
-                case 3:
-                    listClient();
-                    break;
-                
-                case 4:
-                    removeClient();
-                    break;
-                    
-                case 5:
-                    break;
-                
-            }
+        } while (opcion < 1 || opcion > 5);
 
-        
+        switch (opcion) {
+            case 1:
+                createClient();
+                break;
+            case 2:
+                editClient();
+                break;
+
+            case 3:
+                listClient();
+                break;
+
+            case 4:
+                removeClient();
+                break;
+
+            case 5:
+                break;
+
+        }
+
     }
 
     public static void reserve() {
+        int opcion = 0;
 
-     
-       
+        do {
             System.out.println("1) Crear reserva");
             System.out.println("2) Listar reserva");
             System.out.println("3) Terminar reserva");
             System.out.println("4) Salir");
-            
 
+            opcion = teclado();
+
+        } while (opcion < 1 || opcion > 4);
+
+        switch (opcion) {
+            case 1:
+                createReserve();
+                break;
+
+            case 2:
+                listReserve();
+                break;
+
+            case 3:
+                finishReserve();
+                break;
+
+            case 4:
+                break;
+
+        }
+    }
+
+    public static void createReserve() {
         
+
+    }
+
+    public static void listReserve() {
+        int opcion = 0;
+        int aux = 0;
+        Reservation.StatusReserve status = null;
+        
+       
+
+        do {
+
+            System.out.println("1) Listar todos los reservas");
+            System.out.println("2) Listar todos los reservas por estado");
+            System.out.println("3) Ordenar las reservas");
+            System.out.println("4) Salir");
+            
+            
+            opcion = teclado();
+
+        } while (opcion < 1 || opcion > 4);
+
+        switch (opcion) {
+
+            case 1:
+                control.listAllReservations();
+                break;
+            case 2: do {
+                    System.out.println("---¿Que estado de reserva buscas?---");
+                    System.out.println("1) Activas ");
+                    System.out.println("2) Finalizadas");
+                    System.out.println("3) Pendientes por pagar (Pasadas de tiempo limite) ");
+                    aux = teclado();
+                } while (aux < 1 || aux > 3);
+                if (aux == 1) {
+                    status= Reservation.StatusReserve.ACTIVE;
+                } else if (aux == 2) {
+                    status = Reservation.StatusReserve.FINISHED;
+                } else if (aux == 3) {
+                    status = Reservation.StatusReserve.PENDING;
+                }
+                
+                
+
+                control.listAllReservations(status);
+                break;
+                
+            case 3: sortReservation();
+
+    }
+
+    public static void finishReserve(){   //Pasar de active o pending a finished cuando termine la reserva
+
     }
 
     public static void sortClient() {
@@ -222,7 +297,7 @@ public class GUI {
 
     }
 
-    public void sortReservation() {
+    public static void sortReservation() {
         SortOptions result = null;
         int opcion = 0;
         do {
@@ -418,7 +493,7 @@ public class GUI {
         System.out.println("Introduce el producto que quieres borrar");
         String name = tecladoS();
         p = control.isAvailableProduct(name);
-        if(p!=null){
+        if (p != null) {
             pr.products.remove(p);
             System.out.println("El producto ha sido borrado con exito");
         } else {
