@@ -142,7 +142,14 @@ public class GUI {
     
     //FALTA
     public static void editClient(){
-        
+        System.out.println("Introduce el id del cliente a modificar: ");
+        String ID = tecladoS();
+        for(IClient c:cl.clients){
+            if(c.getID().equals(ID)){
+                control.editClient(c);
+                break;
+            }
+        }
     }
     
     public static void removeClient(){

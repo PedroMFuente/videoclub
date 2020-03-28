@@ -199,10 +199,17 @@ public class AppController implements IAppController {
 
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
-        Set<IClient> client = new TreeSet<>();
-        for(Reservation reserves : re.reserves){
-            
+        Set<IClient> ordenado = new TreeSet<>();
+        
+        for(IClient c: cl.clients){
+            for(Reservation r:re.reserves){
+                if(r.getCli()==c && r.getStatus()!=Reservation.StatusReserve.FINISHED){
+                    ordenado.add(c);
+                }
+            }
         }
+        return ordenado;
+        
     }
 
     @Override
