@@ -200,8 +200,8 @@ public class AppController implements IAppController {
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
         Set<IClient> client = new TreeSet<>();
-        for (Reservation reserves : re.reserves) {
-
+        for(Reservation reserves : re.reserves){
+            
         }
     }
 
@@ -237,13 +237,17 @@ public class AppController implements IAppController {
             result = result + reserve.pro.getPrize();
         }
         Set<Reservation> aux1 = listAllReservations(Reservation.StatusReserve.PENDING);
-
+        
+        
         for (Reservation reserve : aux1) {
+            
+                result = result + 3;
+        
+        
+       
 
-            result = result + 3;
-
-        }
-        return result;
+    }
+         return result;
     }
 
     @Override
@@ -251,7 +255,7 @@ public class AppController implements IAppController {
         double result = 0;
         for (Reservation reserve : re.reserves) {
             if (reserve.end.isEqual(from)) {
-
+                
             }
 
         }
@@ -289,28 +293,18 @@ public class AppController implements IAppController {
         return cl.clients.add(new Client(id, name, phone, time));
     }
 
+    
+    //FALTA COMPROBAR QUE NO TENGA RESERVAS
     @Override
     public boolean removeClient(String id) {
-        boolean result = true;
-        IClient client = null;
+        boolean result = false;
 
         if (id != null) {
-            //Busca en reservas si esta el cliente
-            for (Reservation reservation : re.reserves) {
-                if (reservation.cli.getID().equals(id)) {
-                    result = false;
-                }
-            }
-
-            //Si no está el cliente en reservas lo borrara del array de clientes.
-            if (result) {
-                for (IClient c : cl.clients) {
-                    if (c.getID().equals(id)) {
-                        client = c;
-                        break;
-                    }
-                    cl.clients.remove(client);
+            for (IClient c : cl.clients) {
+                if (c != null && c.getID().equals(id)) {
+                    cl.clients.remove(c);
                     result = true;
+                    break;
                 }
             }
 
@@ -318,6 +312,7 @@ public class AppController implements IAppController {
         return result;
     }
 
+    
     //FALTA 
     @Override
     public boolean editClient(IClient e) {

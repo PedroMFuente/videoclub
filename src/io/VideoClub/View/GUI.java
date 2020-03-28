@@ -14,15 +14,14 @@ import io.VideoClub.Model.RepositoryClient;
 import io.VideoClub.Model.RepositoryProduct;
 import io.VideoClub.Model.RepositoryReserve;
 import io.VideoClub.Model.Reservation;
-import io.VideoClub.Utils.Utils;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 import java.util.Set;
 
 public class GUI {
 
     static AppController control = new AppController();
-   
-    private static Utils u = new Utils();
+
     private static RepositoryProduct pr = RepositoryProduct.getInstance();
     private static RepositoryClient cl = RepositoryClient.getInstance();
     private static RepositoryReserve re = RepositoryReserve.getInstance();
@@ -39,7 +38,7 @@ public class GUI {
             System.out.println("2) Cliente");
             System.out.println("3) Reserva");
             System.out.println("4) Salir");
-            opcion = u.tecladoI();
+            opcion = teclado();
 
         } while (opcion < 1 || opcion > 4);
 
@@ -70,7 +69,7 @@ public class GUI {
             System.out.println("3) Listar producto");
             System.out.println("4) Borrar producto");
             System.out.println("5) Salir");
-            opcion = u.tecladoI();
+            opcion = teclado();
         } while (opcion < 1 || opcion > 5);
 
         switch (opcion) {
@@ -102,7 +101,7 @@ public class GUI {
     //FALTA
     public static void editProduct() {
         System.out.println("Introduce la KEY del producto");
-        String key =u.tecladoS();
+        String key = tecladoS();
         //Hace falta meter un producto
     }
 
@@ -115,7 +114,7 @@ public class GUI {
             System.out.println("4) Borrar cliente");
             System.out.println("5) FALTAA"); //FALTA
             System.out.println("6) Salir");
-            opcion = u.tecladoI();
+            opcion = teclado();
         } while (opcion < 1 || opcion > 6);
 
         switch (opcion) {
@@ -140,44 +139,44 @@ public class GUI {
         }
 
     }
-
+    
     //FALTA
-    public static void editClient() {
-
+    public static void editClient(){
+        
     }
-
-    public static void removeClient() {
+    
+    public static void removeClient(){
         System.out.println("Introduce el ID del cliente que quieres borrar");
-        String id = u.tecladoS();
-        if (control.removeClient(id)) {
+        String id = tecladoS();
+        if(control.removeClient(id)){
             System.out.println("Cliente borrado con exito");
         } else {
             System.out.println("No se ha podido borrar el cliente, comprueba que existe el ID y que no tiene reservas pendientes");
         }
-
+    
     }
-
-    public static void listClient() {
+    
+    public static void listClient(){
         int opcion = 0;
-
-        do {
+        
+        do{
             System.out.println("Listado de clientes");
             System.out.println("1)Listar todos los clientes");
             System.out.println("2)Listar todos los clientes ordenados");
             System.out.println("3)Listar todos los clientes con reservas no finalizadas");
             System.out.println("4)Salir");
-            opcion = u.tecladoI();
-        } while (opcion < 1 || opcion > 3);
-
-        switch (opcion) {
+            opcion = teclado();
+        }while(opcion < 1 ||opcion > 3);
+        
+        switch(opcion){
             case 1:
-                u.listClientS(control.listAllClients());
+                control.listAllClients();
                 break;
             case 2:
                 sortClient();
                 break;
             case 3:
-                u.listClientS(control.listAllClientsWithReservationsNotFinished());
+                control.listAllClientsWithReservationsNotFinished();
                 break;
             case 4:
                 break;
@@ -193,7 +192,7 @@ public class GUI {
             System.out.println("3) Terminar reserva");
             System.out.println("4) Salir");
 
-            opcion = u.tecladoI();
+            opcion = teclado();
 
         } while (opcion < 1 || opcion > 4);
 
@@ -219,13 +218,15 @@ public class GUI {
     //FALTA
     public static void createReserve() {
         System.out.println("");
-
+        
     }
 
     public static void listReserve() {
         int opcion = 0;
         int aux = 0;
         Reservation.StatusReserve status = null;
+        
+       
 
         do {
 
@@ -233,43 +234,42 @@ public class GUI {
             System.out.println("2) Listar todos los reservas por estado");
             System.out.println("3) Ordenar las reservas");
             System.out.println("4) Salir");
-
-            opcion = u.tecladoI();
+            
+            
+            opcion = teclado();
 
         } while (opcion < 1 || opcion > 4);
 
         switch (opcion) {
 
             case 1:
-                u.listReservationS(control.listAllReservations());
+                control.listAllReservations();
                 break;
-            case 2:
-                do {
+            case 2: do {
                     System.out.println("---¿Que estado de reserva buscas?---");
                     System.out.println("1) Activas ");
                     System.out.println("2) Finalizadas");
                     System.out.println("3) Pendientes por pagar (Pasadas de tiempo limite) ");
-                    aux = u.tecladoI();
+                    aux = teclado();
                 } while (aux < 1 || aux > 3);
                 if (aux == 1) {
-                    status = Reservation.StatusReserve.ACTIVE;
+                    status= Reservation.StatusReserve.ACTIVE;
                 } else if (aux == 2) {
                     status = Reservation.StatusReserve.FINISHED;
                 } else if (aux == 3) {
                     status = Reservation.StatusReserve.PENDING;
                 }
                 
-                u.listReservationS(control.listAllReservations(status));
+                
+
+                control.listAllReservations(status);
                 break;
+                
+            case 3: sortReservation();
 
-            case 3:
-                sortReservation();
+    }
 
-        }
-
-    
-
-    public static void finishReserve() {   //Pasar de active o pending a finished cuando termine la reserva
+    public static void finishReserve(){   //Pasar de active o pending a finished cuando termine la reserva
 
     }
 
@@ -283,7 +283,7 @@ public class GUI {
             System.out.println("3)Ordenar por telefono a los clientes");
             System.out.println("4)Ordenar ID de menor a mayor a los clientes");
             System.out.println("5)Ordenar ID de mayor a menor a los clientes");
-            opcion = u.tecladoI();
+            opcion = teclado();
         } while (opcion < 1 || opcion > 5);
         switch (opcion) {
             case 1:
@@ -322,7 +322,7 @@ public class GUI {
             System.out.println("-----Ordenar Productos-----");
             System.out.println("1)Ordenar de la A la Z a los productos");
             System.out.println("2)Ordenar de la Z a la A a los productos");
-            opcion = u.tecladoI();
+            opcion = teclado();
         } while (opcion < 1 || opcion > 2);
         switch (opcion) {
             case 1:
@@ -355,7 +355,7 @@ public class GUI {
             System.out.println("5)Ordenar ID de mayor a menor a los clientes");
             System.out.println("6)Ordenar de la A la Z a los productos");
             System.out.println("7)Ordenar de la Z a la A a los productos");
-            opcion = u.tecladoI();
+            opcion = teclado();
         } while (opcion < 1 || opcion > 7);
         switch (opcion) {
             case 1:
@@ -417,14 +417,14 @@ public class GUI {
             System.out.println("10) Listar toda la cantidad de productos por nombre");
             System.out.println("11) Listar toda la cantidad de productos por nombre y tipo");
             System.out.println("12) Salir");
-            opcion = u.tecladoI();
+            opcion = teclado();
 
         } while (opcion < 1 || opcion > 12);
 
         switch (opcion) {
 
             case 1:
-                u.listProductS(control.listAllProducts());
+                control.listAllProducts();
                 break;
             case 2:
                 sortProduct();
@@ -435,7 +435,7 @@ public class GUI {
                     System.out.println("1) Peliculas");
                     System.out.println("2) Juegos");
                     System.out.println("3) Otros ");
-                    aux = u.tecladoI();
+                    aux = teclado();
                 } while (aux < 1 || aux > 3);
                 if (aux == 1) {
                     type = ProductsTypes.Peliculas;
@@ -445,25 +445,25 @@ public class GUI {
                     type = ProductsTypes.Otros;
                 }
 
-                u.listProductS(control.listAllByType(type));
+                control.listAllByType(type);
                 break;
 
             case 4:
                 System.out.println("Dime el nombre del producto");
-                name = u.tecladoS();
-                u.listProductS(control.listAllByName(name));
+                name = tecladoS();
+                control.listAllByName(name);
                 break;
             case 5:
 
                 System.out.println("Dime el nombre del producto");
-                name = u.tecladoS();
+                name = tecladoS();
 
                 do {
                     System.out.println("---¿Que categoría de producto buscas?---");
                     System.out.println("1) Peliculas");
                     System.out.println("2) Juegos");
                     System.out.println("3) Otros ");
-                    aux = u.tecladoI();
+                    aux = teclado();
                 } while (aux < 1 || aux > 3);
                 if (aux == 1) {
                     type = ProductsTypes.Peliculas;
@@ -473,7 +473,7 @@ public class GUI {
                     type = ProductsTypes.Otros;
                 }
 
-                u.listProductS(control.listAllByName(name, type));
+                control.listAllByName(name, type);
 
                 break;
             case 6:
@@ -482,7 +482,7 @@ public class GUI {
                     System.out.println("1) Disponibles");
                     System.out.println("2) Reservados");
 
-                    aux = u.tecladoI();
+                    aux = teclado();
                 } while (aux < 1 || aux > 2);
                 if (aux == 1) {
                     status = Product.Status.AVAILABLE;
@@ -490,32 +490,32 @@ public class GUI {
                     status = Product.Status.RESERVED;
                 }
 
-                u.listProductS(control.listAllByStatus(status));
+                control.listAllByStatus(status);
 
                 break;
             case 7:
-                u.listProductL(control.listAllDifferentProducts());
+                control.listAllDifferentProducts();
                 break;
             case 8:
-                u.listProductL(control.listAllDifferentMovies());
+                control.listAllDifferentMovies();
                 break;
             case 9:
-                u.listProductL(control.listAllDifferentGames());
+                control.listAllDifferentGames();
                 break;
             case 10:
                 System.out.println("¿Que nombre buscas?");
-                name = u.tecladoS();
+                name = tecladoS();
                 control.listAllAmountOfProducts(name);
                 break;
             case 11:
                 System.out.println("¿Que nombre buscas?");
-                name = u.tecladoS();
+                name = tecladoS();
                 do {
                     System.out.println("---¿Que categoría de producto buscas?---");
                     System.out.println("1) Peliculas");
                     System.out.println("2) Juegos");
                     System.out.println("3) Otros ");
-                    aux = u.tecladoI();
+                    aux = teclado();
                 } while (aux < 1 || aux > 3);
                 if (aux == 1) {
                     type = ProductsTypes.Peliculas;
@@ -537,7 +537,7 @@ public class GUI {
     public static void removeProduct() {
         Product p = null;
         System.out.println("Introduce el producto que quieres borrar");
-        String name = u.tecladoS();
+        String name = tecladoS();
         p = control.isAvailableProduct(name);
         if (p != null) {
             pr.products.remove(p);
@@ -550,23 +550,23 @@ public class GUI {
     public static void createProduct() {
         System.out.println("Tipo de producto : ");
         System.out.println("1)Pelicula \n 2)Juego \n 3)Otro");
-        int categoria = u.tecladoI();
+        int categoria = teclado();
 
         System.out.println("Nombre:");
-        String nombre = u.tecladoS();
+        String nombre = tecladoS();
 
         System.out.println("Descripción: ");
-        String descripcion = u.tecladoS();
+        String descripcion = tecladoS();
 
         System.out.println("Precio:");
-        double precio = u.tecladoD();
+        double precio = tecladoD();
 
         switch (categoria) {
             case 1:
                 System.out.println("Creando película : ");
                 System.out.println("Movie Category");
                 System.out.println("1)Horror \n 2)Love \n 3)Action \n 4)SciFi");
-                int categoriaP = u.tecladoI();
+                int categoriaP = teclado();
                 MovieCategory categoriaPelicula = MovieCategory.Horror;
                 switch (categoriaP) {
                     case 1:
@@ -583,7 +583,7 @@ public class GUI {
                         break;
                 }
                 System.out.println("Edad minima");
-                int edadP = u.tecladoI();
+                int edadP = teclado();
                 control.createMovie(ProductsTypes.Peliculas, nombre, descripcion, precio, categoriaPelicula, edadP);
                 break;
             case 2:
@@ -591,7 +591,7 @@ public class GUI {
 
                 System.out.println("Categoría del juego: ");
                 System.out.println("1)Adventures \n 2)Cars \n 3)Shooter");
-                int categoriaJ = u.tecladoI();
+                int categoriaJ = teclado();
                 GameCategory categoriaJuego = GameCategory.Adventures;
                 switch (categoriaJ) {
                     case 1:
@@ -605,7 +605,7 @@ public class GUI {
                         break;
                 }
                 System.out.println("Edad minima");
-                int edadJ = u.tecladoI();
+                int edadJ = teclado();
                 control.createGame(ProductsTypes.Juegos, nombre, descripcion, precio, categoriaJuego, edadJ);
                 break;
             case 3:
@@ -617,19 +617,57 @@ public class GUI {
     }
 
     public static void createClient() {
-
+    
         System.out.println("Introduce el ID del cliente");
-        String idC = u.tecladoS();
+        String idC = tecladoS();
 
         System.out.println("Introduce el nombre");
-        String nameC = u.tecladoS();
+        String nameC = tecladoS();
 
         System.out.println("Introduce numero de telefono");
-        String phoneC = u.tecladoS();
+        String phoneC = tecladoS();
 
         control.createClient(idC, nameC, phoneC, LocalDateTime.now());
     }
 
-    
+    public static int teclado() {
+        int result = 0;
+        boolean salir = false;
+        Scanner teclado = new Scanner(System.in);
+        while (!salir) {
+            try {
+                result = teclado.nextInt();
+                salir = true;
+            } catch (Exception e) {
+                System.out.println("Error");
+                teclado = new Scanner(System.in);
+            }
+        }
+
+        return result;
+    }
+
+    public static double tecladoD() {
+        double result = 0;
+        boolean salir = false;
+        Scanner teclado = new Scanner(System.in);
+        while (!salir) {
+            try {
+                result = teclado.nextDouble();
+                salir = true;
+            } catch (Exception e) {
+                System.out.println("Error");
+                teclado = new Scanner(System.in);
+            }
+        }
+        return result;
+    }
+
+    public static String tecladoS() {
+        String texto;
+        Scanner teclado = new Scanner(System.in);
+        texto = teclado.next();
+        return texto;
+    }
 
 }
