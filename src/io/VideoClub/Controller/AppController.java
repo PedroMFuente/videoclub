@@ -199,7 +199,10 @@ public class AppController implements IAppController {
 
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<IClient> client = new TreeSet<>();
+        for(Reservation reserves : re.reserves){
+            
+        }
     }
 
     @Override
@@ -290,6 +293,8 @@ public class AppController implements IAppController {
         return cl.clients.add(new Client(id, name, phone, time));
     }
 
+    
+    //FALTA COMPROBAR QUE NO TENGA RESERVAS
     @Override
     public boolean removeClient(String id) {
         boolean result = false;
@@ -307,6 +312,8 @@ public class AppController implements IAppController {
         return result;
     }
 
+    
+    //FALTA 
     @Override
     public boolean editClient(IClient e) {
         boolean result = false;
@@ -325,6 +332,7 @@ public class AppController implements IAppController {
         return result;
     }
 
+    //FALTA
     @Override
     public boolean addProduct(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -345,6 +353,7 @@ public class AppController implements IAppController {
         return result;
     }
 
+    //ESTA BIEN?
     @Override
     public boolean editProduct(String key, Product newP) {
         boolean result = false;

@@ -20,9 +20,6 @@ public class Reservation {
         return status;
     }
 
-   
-    
-   
     
     private Reservation(){};
     public Reservation(Product pro,IClient cli){

@@ -26,8 +26,8 @@ public class Client implements IClient {
         this.time = time;
     }
 
-      
 
+    
     @Override
     public String getID() {
         return ID;

@@ -98,6 +98,7 @@ public class GUI {
 
     }
 
+    //FALTA
     public static void editProduct() {
         System.out.println("Introduce la KEY del producto");
         String key = tecladoS();
@@ -111,9 +112,10 @@ public class GUI {
             System.out.println("2) Editar cliente");
             System.out.println("3) Listar cliente");
             System.out.println("4) Borrar cliente");
-            System.out.println("5) Salir");
+            System.out.println("5) FALTAA"); //FALTA
+            System.out.println("6) Salir");
             opcion = teclado();
-        } while (opcion < 1 || opcion > 5);
+        } while (opcion < 1 || opcion > 6);
 
         switch (opcion) {
             case 1:
@@ -136,6 +138,49 @@ public class GUI {
 
         }
 
+    }
+    
+    //FALTA
+    public static void editClient(){
+        
+    }
+    
+    public static void removeClient(){
+        System.out.println("Introduce el ID del cliente que quieres borrar");
+        String id = tecladoS();
+        if(control.removeClient(id)){
+            System.out.println("Cliente borrado con exito");
+        } else {
+            System.out.println("No se ha podido borrar el cliente, comprueba que existe el ID y que no tiene reservas pendientes");
+        }
+    
+    }
+    
+    public static void listClient(){
+        int opcion = 0;
+        
+        do{
+            System.out.println("Listado de clientes");
+            System.out.println("1)Listar todos los clientes");
+            System.out.println("2)Listar todos los clientes ordenados");
+            System.out.println("3)Listar todos los clientes con reservas no finalizadas");
+            System.out.println("4)Salir");
+            opcion = teclado();
+        }while(opcion < 1 ||opcion > 3);
+        
+        switch(opcion){
+            case 1:
+                control.listAllClients();
+                break;
+            case 2:
+                sortClient();
+                break;
+            case 3:
+                control.listAllClientsWithReservationsNotFinished();
+                break;
+            case 4:
+                break;
+        }
     }
 
     public static void reserve() {
@@ -170,9 +215,10 @@ public class GUI {
         }
     }
 
+    //FALTA
     public static void createReserve() {
+        System.out.println("");
         
-
     }
 
     public static void listReserve() {
@@ -571,7 +617,7 @@ public class GUI {
     }
 
     public static void createClient() {
-        //ID haremos una funcion aleatoria seguramente
+    
         System.out.println("Introduce el ID del cliente");
         String idC = tecladoS();
 
