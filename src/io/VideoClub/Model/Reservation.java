@@ -20,6 +20,46 @@ public class Reservation {
         return status;
     }
 
+    public Product getPro() {
+        return pro;
+    }
+
+    public void setPro(Product pro) {
+        this.pro = pro;
+    }
+
+    public IClient getCli() {
+        return cli;
+    }
+
+    public void setCli(IClient cli) {
+        this.cli = cli;
+    }
+
+    public LocalDate getIni() {
+        return ini;
+    }
+
+    public void setIni(LocalDate ini) {
+        this.ini = ini;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
+    }
+
+    public LocalDate getFinished() {
+        return finished;
+    }
+
+    public void setFinished(LocalDate finished) {
+        this.finished = finished;
+    }
+
     
     private Reservation(){};
     public Reservation(Product pro,IClient cli){
