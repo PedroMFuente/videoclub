@@ -323,15 +323,14 @@ public class AppController implements IAppController {
         return result;
     }
 
-    //FALTA 
     @Override
     public boolean editClient(IClient e) {
         boolean result = false;
         if (e != null) {
             for (IClient c : cl.clients) {
                 if (c != null && c.equals(e)) {
-                    c.setName("");
-                    c.setPhone("");
+                    c.setName(e.getName());
+                    c.setPhone(e.getPhone());
                     c.setTime(LocalDateTime.now());
                     result = true;
                     break;

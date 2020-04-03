@@ -4,6 +4,7 @@ import io.VideoClub.Comparators.ClientComparator;
 import io.VideoClub.Comparators.ProductComparator;
 import io.VideoClub.Comparators.ReservationComparator;
 import io.VideoClub.Controller.AppController;
+import io.VideoClub.Model.Client;
 import io.VideoClub.Model.Enums.GameCategory;
 import io.VideoClub.Model.Enums.MovieCategory;
 import io.VideoClub.Model.Enums.ProductsTypes;
@@ -107,7 +108,7 @@ public class GUI {
     public static void editProduct() {
         System.out.println("Introduce la clave del producto que quieres editar");
         String key = u.tecladoS();
-        Product p =createProducts();
+        Product p = createProducts();
         p.setKey(key);
         if(control.editProduct(key, p)){
             System.out.println("Producto editado correctamente");
@@ -158,12 +159,14 @@ public class GUI {
     public static void editClient(){
         System.out.println("Introduce el id del cliente a modificar: ");
         String ID = u.tecladoS();
-        for(IClient c:cl.clients){
-            if(c.getID().equals(ID)){
-                control.editClient(c);
-                break;
-            }
+        IClient c = createClients();
+        if(control.editClient(c)){
+            System.out.println("Cliente editado correctamente");
+        } else {
+            System.out.println("No se ha podido editar el cliente");
         }
+        
+        
     }
     
     public static void removeClient(){
@@ -720,6 +723,21 @@ public class GUI {
         String phoneC = u.tecladoS();
 
         control.createClient(idC, nameC, phoneC, LocalDateTime.now());
+    }
+    
+    public static IClient createClients(){
+        System.out.println("Introduce el ID del cliente");
+        String idC = u.tecladoS();
+
+        System.out.println("Introduce el nombre");
+        String nameC = u.tecladoS();
+
+        System.out.println("Introduce numero de telefono");
+        String phoneC = u.tecladoS();
+        
+        Client c = new Client(idC, nameC, phoneC, LocalDateTime.now());
+        
+        return c;
     }
 
    
