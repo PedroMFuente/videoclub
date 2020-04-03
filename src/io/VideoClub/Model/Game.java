@@ -37,6 +37,9 @@ public class Game extends Product{
         return "Juego{" +super.toString()+ " category=" + category + " edad minima=" + minAge + '}';
     }
 
-   
+   public Game clone()throws CloneNotSupportedException {
+        Product clone = (Product) super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (Game) clone;
+   }
     
 }
