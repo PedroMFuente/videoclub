@@ -239,9 +239,56 @@ public class GUI {
         }
     }
 
-    //FALTA
-    public static void createReserve() {
-        System.out.println("");
+    
+    public static void createReserve() {    
+        int opcion = 0;
+        Set<Product> aux = null;
+        Product p = null;
+        IClient c = null;
+        System.out.println("Introduce el nombre del producto que quieres reservar:");
+        String name = u.tecladoS();
+        do{
+        System.out.println("-----Tipo de producto-------");
+        System.out.println("1)Pelicula \n 2)Juego \n 3)Otros");
+        opcion = u.tecladoI();
+        }while(opcion < 1 || opcion > 3);
+        
+        switch(opcion){
+            case 1:
+                aux = control.listAllByName(name, ProductsTypes.Peliculas);
+                break;
+            case 2:
+                aux = control.listAllByName(name, ProductsTypes.Juegos);
+                break;
+            case 3:
+                aux = control.listAllByName(name, ProductsTypes.Otros);
+                break;
+        }
+        
+        
+        if(aux.isEmpty()){
+            System.out.println("No se encuentra ningun producto con ese nombre");
+        } else {
+             System.out.println("----------Productos----------");
+             for(Product pr : aux){
+                 p = pr;
+                 break;
+             }
+             System.out.println("Introduce tu dni");
+             String nameC = u.tecladoS();
+             
+             for(IClient client : cl.clients){
+                 if(client.getID().equals(nameC)){
+                     c = client;
+                     break;
+                 }   
+             }
+             
+          if(c != null && p != null){
+                 control.reserveProduct(p, c);
+             }
+             
+        }
         
     }
 

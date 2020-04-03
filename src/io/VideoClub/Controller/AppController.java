@@ -42,13 +42,25 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Product> listAllProducts() {
-        return pr.products;
+        Set<Product> aux = null;
+        for(Product p : pr.products){
+            if(p.getStatus().equals(Product.Status.AVAILABLE)){
+                aux.add(p);
+            }
+        }
+        return aux;
     }
 
     @Override
     public Set<Product> listAllProducts(Comparator c) {
         Set<Product> ordenado = new TreeSet<>(c);
-        ordenado.addAll(pr.products);
+        Set<Product> aux = null;
+        for(Product p : pr.products){
+            if(p.getStatus().equals(Product.Status.AVAILABLE)){
+                aux.add(p);
+            }
+        }
+        ordenado.addAll(aux);
         return ordenado;
     }
 
@@ -56,7 +68,7 @@ public class AppController implements IAppController {
     public Set<Product> listAllByType(ProductsTypes type) {
         Set<Product> p = new TreeSet<>();
         for (Product aux : pr.products) {
-            if (aux != null && aux.getType().equals(type)) {
+            if (aux != null && aux.getType().equals(type) && aux.getStatus().equals(Product.Status.AVAILABLE)) {
                 p.add(aux);
             }
         }
@@ -67,7 +79,7 @@ public class AppController implements IAppController {
     public Set<Product> listAllByName(String name) {
         Set<Product> p = new TreeSet<>();
         for (Product pr : pr.products) {
-            if (pr != null && name.equals(pr.getName())) {
+            if (pr != null && name.equals(pr.getName()) && pr.getStatus().equals(Product.Status.AVAILABLE)) {
                 p.add(pr);
             }
         }
@@ -134,7 +146,7 @@ public class AppController implements IAppController {
         Product aux2 = null;
         if (name != null) {
             for (Product pr : pr.products) {
-                if (pr != null && pr.getName().equals(name)) {
+                if (pr != null && pr.getName().equals(name) && pr.getStatus().equals(Product.Status.AVAILABLE)) {
                     if (aux2 == null) {
                         aux2 = pr;
                     }
@@ -153,7 +165,7 @@ public class AppController implements IAppController {
         Product aux2 = null;
 
         for (Product pr : pr.products) {
-            if (pr != null && pr.getName().equals(name) && pr.getType().equals(type)) {
+            if (pr != null && pr.getName().equals(name) && pr.getType().equals(type) && pr.getStatus().equals(Product.Status.AVAILABLE)) {
                 if (aux2 == null) {
                     aux2 = pr;
                 }
@@ -409,12 +421,8 @@ public class AppController implements IAppController {
 
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
-        if (prod != null && client != null) {
-            return re.reserves.add(new Reservation(prod, client));
-        } else {
-            return false;
-        }
-
+      return re.reserves.add(new Reservation(prod, client));
+       
     }
 
     @Override
@@ -461,5 +469,7 @@ public class AppController implements IAppController {
     public boolean saveAllDDBB() {
         return saveCatalogFromDDBB() && saveClientsFromDDBB() && saveReservationsFromDDBB();
     }
+    
+    public boolean 
 
 }
