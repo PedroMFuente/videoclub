@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -58,29 +60,6 @@ public class AppController implements IAppController {
                 p.add(aux);
             }
         }
-        /*for (Product pr : pr.products) {
-            switch (type) {
-                case Peliculas:
-                    if (pr instanceof Movie) {
-                        p.add(pr);
-                    }
-                    break;
-                case Juegos:
-                    if (pr instanceof Game) {
-                        p.add(pr);
-                    }
-                    break;
-                case Otros:
-                    if (pr instanceof Otros) {
-                        p.add(pr);
-                    }
-                    break;
-                default:
-                    p.addAll(pr.products);
-                    break;
-
-            }
-        }*/
         return p;
     }
 
@@ -323,7 +302,6 @@ public class AppController implements IAppController {
         return result;
     }
 
-    //FALTA 
     @Override
     public boolean editClient(IClient e) {
         boolean result = false;
@@ -342,10 +320,44 @@ public class AppController implements IAppController {
         return result;
     }
 
-    //FALTA
     @Override
     public boolean addProduct(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean result=false;
+        
+        for(Product p:pr.products){
+            if(p.getName().equals(name)){
+                if(p.getType()==ProductsTypes.Juegos){
+                    Game aux=(Game) p;
+                    try {
+                        aux.clone();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.products.add(aux);
+                    result=true;
+                }else if(p.getType()==ProductsTypes.Peliculas){
+                    Movie aux=(Movie) p;
+                    try {
+                        aux.clone();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.products.add(aux);
+                    result=true;
+                }else if(p.getType()==ProductsTypes.Otros){
+                    Others aux=(Others) p;
+                    try {
+                        aux.clone();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pr.products.add(aux);
+                    result=true;
+                }
+            }
+        }
+        
+        return result;
     }
 
     @Override
@@ -363,7 +375,6 @@ public class AppController implements IAppController {
         return result;
     }
 
-    //ESTA BIEN?
     @Override
     public boolean editProduct(String key, Product newP) {
         boolean result = false;
