@@ -17,12 +17,14 @@ public enum SortOptions {
     IDMinToMax,
     IDMaxToMin,
     
+    
     //PRODUCT
     AToZP,
     ZtoAP,
     
     //RESERVATION
-    
+    DatePlusR,
+    DateLessR,
     
     
 }

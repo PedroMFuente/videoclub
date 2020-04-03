@@ -5,17 +5,17 @@
  */
 package io.VideoClub.Comparators;
 
-
 import io.VideoClub.Model.Reservation;
 import java.util.Comparator;
 import io.VideoClub.Model.Enums.SortOptions;
-
+import java.time.LocalDate;
 
 /**
  *
  * @author migue
  */
-public class ReservationComparator implements Comparator<Reservation>{
+public class ReservationComparator implements Comparator<Reservation> {
+
     private SortOptions option;
 
     public SortOptions getOption() {
@@ -25,12 +25,13 @@ public class ReservationComparator implements Comparator<Reservation>{
     public void setOption(SortOptions option) {
         this.option = option;
     }
+
     @Override
     public int compare(Reservation o1, Reservation o2) {
         SortOptions opcion = option;
         int result = 0;
-        switch(opcion){
-            
+        switch (opcion) {
+
             //CLIENT SORT
             case AToZC:
                 result = o1.cli.getName().compareTo(o2.cli.getName());
@@ -47,7 +48,7 @@ public class ReservationComparator implements Comparator<Reservation>{
             case IDMaxToMin:
                 result = o2.cli.getID().compareTo(o1.cli.getID());
                 break;
-             
+
             //PRODUCT SORT
             case AToZP:
                 result = o1.pro.getName().compareTo(o2.pro.getName());
@@ -55,15 +56,21 @@ public class ReservationComparator implements Comparator<Reservation>{
             case ZtoAP:
                 result = o2.pro.getName().compareTo(o1.pro.getName());
                 break;
-                
+
             //RESERVATION SORT
+            case DatePlusR:
+
+                break;
+
+            case DateLessR:
+               
                 
+                break;
             default:
                 break;
-        
-    }
 
-    
-    return result;
-}
+        }
+
+        return result;
+    }
 }

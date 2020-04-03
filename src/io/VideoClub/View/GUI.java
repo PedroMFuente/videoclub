@@ -26,7 +26,7 @@ import java.util.Set;
 public class GUI {
 
     static AppController control = new AppController();
-    
+
     private static Utils u = new Utils();
     private static RepositoryProduct pr = RepositoryProduct.getInstance();
     private static RepositoryClient cl = RepositoryClient.getInstance();
@@ -104,20 +104,17 @@ public class GUI {
 
     }
 
-   
     public static void editProduct() {
         System.out.println("Introduce la clave del producto que quieres editar");
         String key = u.tecladoS();
         Product p = createProducts();
         p.setKey(key);
-        if(control.editProduct(key, p)){
+        if (control.editProduct(key, p)) {
             System.out.println("Producto editado correctamente");
         } else {
             System.out.println("Comprueba que la key este correcta");
         }
-    
-        
-       
+
     }
 
     public static void client() {
@@ -154,45 +151,44 @@ public class GUI {
         }
 
     }
-    
+
     //FALTA
-    public static void editClient(){
+    public static void editClient() {
         System.out.println("Introduce el id del cliente a modificar: ");
         String ID = u.tecladoS();
         IClient c = createClients();
-        if(control.editClient(c)){
+        if (control.editClient(c)) {
             System.out.println("Cliente editado correctamente");
         } else {
             System.out.println("No se ha podido editar el cliente");
         }
-        
-        
+
     }
-    
-    public static void removeClient(){
+
+    public static void removeClient() {
         System.out.println("Introduce el ID del cliente que quieres borrar");
         String id = u.tecladoS();
-        if(control.removeClient(id)){
+        if (control.removeClient(id)) {
             System.out.println("Cliente borrado con exito");
         } else {
             System.out.println("No se ha podido borrar el cliente, comprueba que existe el ID y que no tiene reservas pendientes");
         }
-    
+
     }
-    
-    public static void listClient(){
+
+    public static void listClient() {
         int opcion = 0;
-        
-        do{
+
+        do {
             System.out.println("Listado de clientes");
             System.out.println("1)Listar todos los clientes");
             System.out.println("2)Listar todos los clientes ordenados");
             System.out.println("3)Listar todos los clientes con reservas no finalizadas");
             System.out.println("4)Salir");
             opcion = u.tecladoI();
-        }while(opcion < 1 ||opcion > 3);
-        
-        switch(opcion){
+        } while (opcion < 1 || opcion > 3);
+
+        switch (opcion) {
             case 1:
                 u.listClientS(control.listAllClients());
                 break;
@@ -242,15 +238,13 @@ public class GUI {
     //FALTA
     public static void createReserve() {
         System.out.println("");
-        
+
     }
 
     public static void listReserve() {
         int opcion = 0;
         int aux = 0;
         Reservation.StatusReserve status = null;
-        
-       
 
         do {
 
@@ -258,8 +252,7 @@ public class GUI {
             System.out.println("2) Listar todos los reservas por estado");
             System.out.println("3) Ordenar las reservas");
             System.out.println("4) Salir");
-            
-            
+
             opcion = u.tecladoI();
 
         } while (opcion < 1 || opcion > 4);
@@ -269,7 +262,8 @@ public class GUI {
             case 1:
                 u.listReservationS(control.listAllReservations());
                 break;
-            case 2: do {
+            case 2:
+                do {
                     System.out.println("---¿Que estado de reserva buscas?---");
                     System.out.println("1) Activas ");
                     System.out.println("2) Finalizadas");
@@ -277,23 +271,36 @@ public class GUI {
                     aux = u.tecladoI();
                 } while (aux < 1 || aux > 3);
                 if (aux == 1) {
-                    status= Reservation.StatusReserve.ACTIVE;
+                    status = Reservation.StatusReserve.ACTIVE;
                 } else if (aux == 2) {
                     status = Reservation.StatusReserve.FINISHED;
                 } else if (aux == 3) {
                     status = Reservation.StatusReserve.PENDING;
                 }
-                
+
                 u.listReservationS(control.listAllReservations(status));
                 break;
-                
-            case 3: 
+
+            case 3:
                 sortReservation();
                 break;
 
+        }
     }
 
-    public static void finishReserve(){   //Pasar de active o pending a finished cuando termine la reserva
+    public static void finishReserve() {
+        System.out.println("Dime tu nombre ");
+        String name = u.tecladoS();
+        System.out.println("Dime el nombre del producto");
+        String name2 = u.tecladoS();
+
+        for (Reservation reserve : re.reserves) {
+            if (reserve.cli.getName().equals(name) && reserve.pro.getName().equals(name2)) {
+                System.out.println("El total de su reserva ha sido: "+control.closeReservation(reserve)+"€" );
+                break;
+            }
+
+        }
 
     }
 
@@ -379,8 +386,10 @@ public class GUI {
             System.out.println("5)Ordenar ID de mayor a menor a los clientes");
             System.out.println("6)Ordenar de la A la Z a los productos");
             System.out.println("7)Ordenar de la Z a la A a los productos");
+            System.out.println("8)Ordenar por fecha de reserva mas reciente");
+            System.out.println("9)Ordenar por fecha de reserva mas antigua");
             opcion = u.tecladoI();
-        } while (opcion < 1 || opcion > 7);
+        } while (opcion < 1 || opcion > 9);
         switch (opcion) {
             case 1:
                 result = SortOptions.AToZC;
@@ -410,6 +419,15 @@ public class GUI {
                 result = SortOptions.ZtoAP;
                 reservationComparator.setOption(result);
                 break;
+            case 8:
+                result = SortOptions.DatePlusR;
+                reservationComparator.setOption(result);
+                break;
+            case 9:
+                result = SortOptions.DateLessR;
+                reservationComparator.setOption(result);
+                break;
+
             default:
                 break;
 
@@ -474,7 +492,8 @@ public class GUI {
 
             case 4:
                 System.out.println("Dime el nombre del producto");
-                name = u.tecladoS();;
+                name = u.tecladoS();
+                ;
                 u.listProductS(control.listAllByName(name));
                 break;
             case 5:
@@ -638,10 +657,10 @@ public class GUI {
                 break;
         }
     }
-    
+
     public static Product createProducts() {
         Product p = null;
-    
+
         System.out.println("Tipo de producto : ");
         System.out.println("1)Pelicula \n 2)Juego \n 3)Otro");
         int categoria = u.tecladoI();
@@ -712,7 +731,7 @@ public class GUI {
     }
 
     public static void createClient() {
-    
+
         System.out.println("Introduce el ID del cliente");
         String idC = u.tecladoS();
 
@@ -724,8 +743,8 @@ public class GUI {
 
         control.createClient(idC, nameC, phoneC, LocalDateTime.now());
     }
-    
-    public static IClient createClients(){
+
+    public static IClient createClients() {
         System.out.println("Introduce el ID del cliente");
         String idC = u.tecladoS();
 
@@ -734,12 +753,10 @@ public class GUI {
 
         System.out.println("Introduce numero de telefono");
         String phoneC = u.tecladoS();
-        
+
         Client c = new Client(idC, nameC, phoneC, LocalDateTime.now());
-        
+
         return c;
     }
-
-   
 
 }
