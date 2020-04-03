@@ -777,6 +777,6 @@ public class AppController implements IAppController {
         return saveCatalogFromDDBB() && saveClientsFromDDBB() && saveReservationsFromDDBB();
     }
     
-    public boolean 
+   
 
 }
