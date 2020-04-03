@@ -61,7 +61,7 @@ public interface IAppController {
     
     Product isAvailableProduct(String name);  //get product if yes
     boolean reserveProduct(Product prod,IClient client);
-    double closeReservation();  //-->> status finished  --> get prizetopay
+    double closeReservation(Reservation reserve);  //-->> status finished  --> get prizetopay
     
     boolean loadCatalogFromDDBB();  //XML or JSON
     boolean loadClientsFromDDBB();

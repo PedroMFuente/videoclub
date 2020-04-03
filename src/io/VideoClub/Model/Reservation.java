@@ -24,6 +24,11 @@ public class Reservation {
         return pro;
     }
 
+    public void setStatus(StatusReserve status) {
+        this.status = status;
+    }
+    
+
     public void setPro(Product pro) {
         this.pro = pro;
     }
