@@ -37,7 +37,10 @@ public class GUI {
 
     public static void principal() {
         int opcion = 0;
-        control.loadAllDDBB();
+        System.out.println("Para guardar hay que darle a volver a atras");
+        System.out.println("--------------------------------------------");
+        System.out.println(" ");
+        
         do {
             System.out.println("Que desea saber ");
             System.out.println("1) Producto");
@@ -104,6 +107,7 @@ public class GUI {
                     break;
 
                 case 5:
+                    control.saveCatalogFromDDBB();
                     principal();
                     break;
 
@@ -153,6 +157,7 @@ public class GUI {
                 break;
 
             case 5:
+                control.saveClientsFromDDBB();
                 principal();
                 break;
 
@@ -239,6 +244,7 @@ public class GUI {
                 break;
 
             case 4:
+                control.saveReservationsFromDDBB();
                 principal();
                 break;
 

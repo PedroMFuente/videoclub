@@ -446,7 +446,7 @@ public class AppController implements IAppController {
         Product p = null;
 
         for (Product pr : pr.products) {
-            if (pr != null && p.getName().equals(name) && p.getStatus().equals(Product.Status.AVAILABLE)) {
+            if (pr != null && pr.getName().equals(name) && pr.getStatus().equals(Product.Status.AVAILABLE)) {
                 p = pr;
                 break;
             }
