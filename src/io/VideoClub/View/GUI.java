@@ -73,15 +73,15 @@ public class GUI {
     }
 
     public static void product() {
-
         int opcion = 0;
         do {
+
             do {
                 System.out.println("1) Crear producto");
                 System.out.println("2) Editar producto");
                 System.out.println("3) Listar producto");
                 System.out.println("4) Borrar producto");
-                System.out.println("5) Salir");
+                System.out.println("5) Volver atrás");
                 opcion = u.tecladoI();
             } while (opcion < 1 || opcion > 5);
 
@@ -104,7 +104,7 @@ public class GUI {
                     break;
 
                 case 5:
-
+                    principal();
                     break;
 
             }
@@ -132,7 +132,7 @@ public class GUI {
             System.out.println("3) Listar cliente");
             System.out.println("4) Borrar cliente");
             System.out.println("5) FALTAA"); //FALTA
-            System.out.println("6) Salir");
+            System.out.println("6) Volver atrás");
             opcion = u.tecladoI();
         } while (opcion < 1 || opcion > 6);
 
@@ -153,6 +153,7 @@ public class GUI {
                 break;
 
             case 5:
+                principal();
                 break;
 
         }
@@ -191,7 +192,7 @@ public class GUI {
             System.out.println("1)Listar todos los clientes");
             System.out.println("2)Listar todos los clientes ordenados");
             System.out.println("3)Listar todos los clientes con reservas no finalizadas");
-            System.out.println("4)Salir");
+            System.out.println("4)Volver atrás");
             opcion = u.tecladoI();
         } while (opcion < 1 || opcion > 3);
 
@@ -206,6 +207,7 @@ public class GUI {
                 u.listClientS(control.listAllClientsWithReservationsNotFinished());
                 break;
             case 4:
+                client();
                 break;
         }
     }
@@ -217,7 +219,7 @@ public class GUI {
             System.out.println("1) Crear reserva");
             System.out.println("2) Listar reserva");
             System.out.println("3) Terminar reserva");
-            System.out.println("4) Salir");
+            System.out.println("4) Volver atrás");
 
             opcion = u.tecladoI();
 
@@ -237,6 +239,7 @@ public class GUI {
                 break;
 
             case 4:
+                principal();
                 break;
 
         }
@@ -303,7 +306,7 @@ public class GUI {
             System.out.println("1) Listar todos los reservas");
             System.out.println("2) Listar todos los reservas por estado");
             System.out.println("3) Ordenar las reservas");
-            System.out.println("4) Salir");
+            System.out.println("4) Volver atrás");
 
             opcion = u.tecladoI();
 
@@ -335,6 +338,9 @@ public class GUI {
 
             case 3:
                 sortReservation();
+                break;
+            case 4:
+                reserve();
                 break;
 
         }
@@ -510,7 +516,7 @@ public class GUI {
             System.out.println("9) Listar todos los juegos diferentes");
             System.out.println("10) Listar toda la cantidad de productos por nombre");
             System.out.println("11) Listar toda la cantidad de productos por nombre y tipo");
-            System.out.println("12) Salir");
+            System.out.println("12) Volver atrás");
             opcion = u.tecladoI();
 
         } while (opcion < 1 || opcion > 12);
@@ -519,7 +525,7 @@ public class GUI {
 
             case 1:
                 Set<Product> aux11 = control.listAllProducts();
-                u.listProductS(aux11); 
+                u.listProductS(aux11);
                 break;
             case 2:
                 sortProduct();
@@ -623,6 +629,7 @@ public class GUI {
                 control.listAllAmountOfProducts(type, name);
                 break;
             case 12:
+                product();
                 break;
 
         }
