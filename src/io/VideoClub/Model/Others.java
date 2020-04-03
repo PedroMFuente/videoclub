@@ -14,5 +14,9 @@ public class Others extends Product{
     public Others(String name, String description, double prize) {
         super(name, description, prize);
     }
+    public Others clone()throws CloneNotSupportedException {
+        Product clone = (Product) super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (Others) clone;
+   }
     
 }
