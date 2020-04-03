@@ -19,6 +19,8 @@ import io.VideoClub.Model.Game;
 import io.VideoClub.Model.Others;
 import io.VideoClub.Model.RepositoryClient;
 import io.VideoClub.Model.RepositoryReserve;
+import io.VideoClub.Model.Reservation.StatusReserve;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,6 +31,21 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -451,17 +468,126 @@ public class AppController implements IAppController {
 
     @Override
     public boolean loadCatalogFromDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean aux = false;
+        try {
+            File archivo = new File("productos.xml");
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document document = documentBuilder.parse(archivo);
+
+            document.getDocumentElement().normalize();
+
+            System.out.println("Elemento raiz: " + document.getDocumentElement().getNodeName());
+
+            NodeList e = document.getElementsByTagName("Producto");
+
+            for (int i = 0; i < e.getLength(); i++) {
+                Node nodo = e.item(i);
+                System.out.println("Elemento: " + nodo.getNodeName());
+
+                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) nodo;
+
+                    System.out.println("Nombre: " + element.getElementsByTagName("Nombre").item(0).getTextContent());
+                    System.out.println("Descripcion: " + element.getElementsByTagName("Descripcion").item(0).getTextContent());
+                    System.out.println("Precio: " + element.getElementsByTagName("Precio").item(0).getTextContent());
+                    System.out.println("Key: " + element.getElementsByTagName("Key").item(0).getTextContent());
+                    System.out.println("Estado: " + element.getElementsByTagName("Estado").item(0).getTextContent());
+                    System.out.println("Tipo: " + element.getElementsByTagName("Tipo").item(0).getTextContent());
+
+                    System.out.println("");
+                    aux = true;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return aux;
     }
 
     @Override
     public boolean loadClientsFromDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean aux = false;
+        try {
+            File archivo = new File("clientes.xml");
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document document = documentBuilder.parse(archivo);
+
+            document.getDocumentElement().normalize();
+
+            System.out.println("Elemento raiz: " + document.getDocumentElement().getNodeName());
+
+            NodeList e = document.getElementsByTagName("Cliente");
+
+            for (int i = 0; i < e.getLength(); i++) {
+                Node nodo = e.item(i);
+                
+                if(nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) nodo;
+                    String id= element.getElementsByTagName("ID").item(0).getTextContent();
+                    String n= element.getElementsByTagName("Nombre").item(0).getTextContent();
+                    String t= element.getElementsByTagName("Telefono").item(0).getTextContent();
+                    LocalDateTime l= LocalDateTime.parse(element.getElementsByTagName("Fecha").item(0).getTextContent());
+                    
+                    Client c=new Client (id,n,t,l);
+                    cl.clients.add(c);
+                    System.out.println("");
+                    aux=true;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return aux;
     }
 
     @Override
     public boolean loadReservationsFromDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean aux = false;
+        try {
+            File archivo = new File("productos.xml");
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document document = documentBuilder.parse(archivo);
+
+            document.getDocumentElement().normalize();
+
+            System.out.println("Elemento raiz: " + document.getDocumentElement().getNodeName());
+
+            NodeList e = document.getElementsByTagName("Producto");
+
+            for (int i = 0; i < e.getLength(); i++) {
+                Node nodo = e.item(i);
+
+                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) nodo;
+
+                    StatusReserve r = StatusReserve.valueOf(element.getElementsByTagName("Estado").item(0).getTextContent());
+                    Product p = Product.class.cast(element.getElementsByTagName("Producto").item(0).getTextContent());
+                    IClient c = IClient.class.cast(element.getElementsByTagName("Cliente").item(0).getTextContent());
+                    LocalDate in = LocalDate.parse(element.getElementsByTagName("FechaInicio").item(0).getTextContent());
+                    LocalDate ed = LocalDate.parse(element.getElementsByTagName("FechaFinal").item(0).getTextContent());
+                    LocalDate fi = LocalDate.parse(element.getElementsByTagName("FechaEntrega").item(0).getTextContent());
+
+                    Reservation ass = new Reservation(p, c);
+                    ass.setIni(in);
+                    ass.setEnd(ed);
+                    ass.setFinished(fi);
+                    re.reserves.add(ass);
+                    aux = true;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return aux;
     }
 
     @Override
@@ -471,17 +597,171 @@ public class AppController implements IAppController {
 
     @Override
     public boolean saveCatalogFromDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean aux = false;
+        try {
+            DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
+            DocumentBuilder build;
+            build = dFact.newDocumentBuilder();
+            Document doc = build.newDocument();
+
+            Element root = doc.createElement("Repositorio");
+
+            for (Product products : pr.products) {
+
+                Element con = doc.createElement("Producto");
+
+                Element nombre = doc.createElement("Nombre");
+                nombre.appendChild(doc.createTextNode(products.getName()));
+                con.appendChild(nombre);
+
+                Element description = doc.createElement("Descripcion");
+                description.appendChild(doc.createTextNode(products.getDescription()));
+                con.appendChild(description);
+
+                Element prize = doc.createElement("Precio");
+                prize.appendChild(doc.createTextNode(String.valueOf(products.getPrize())));
+                con.appendChild(prize);
+
+                Element key = doc.createElement("Key");
+                key.appendChild(doc.createTextNode(products.getKey()));
+                con.appendChild(key);
+
+                Element status = doc.createElement("Estado");
+                status.appendChild(doc.createTextNode(products.getStatus().toString()));
+                con.appendChild(status);
+
+                Element type = doc.createElement("Tipo");
+                type.appendChild(doc.createTextNode(products.getType().toString()));
+                con.appendChild(type);
+
+                root.appendChild(con);
+            }
+            doc.appendChild(root);
+
+            Source source = new DOMSource(doc);
+
+            Result result = new StreamResult(new java.io.File("productos.xml"));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+            aux = true;
+
+        } catch (ParserConfigurationException e) {
+
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return aux;
     }
 
     @Override
     public boolean saveClientsFromDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean aux = false;
+        try {
+            DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
+            DocumentBuilder build;
+            build = dFact.newDocumentBuilder();
+            Document doc = build.newDocument();
+
+            Element root = doc.createElement("Repositorio");
+
+            for (IClient clients : cl.clients) {
+
+                Element con = doc.createElement("Cliente");
+
+                Element nombre = doc.createElement("Nombre");
+                nombre.appendChild(doc.createTextNode(clients.getName()));
+                con.appendChild(nombre);
+
+                Element id = doc.createElement("ID");
+                id.appendChild(doc.createTextNode(clients.getID()));
+                con.appendChild(id);
+
+                Element phone = doc.createElement("Telefono");
+                phone.appendChild(doc.createTextNode(clients.getPhone()));
+                con.appendChild(phone);
+
+                Element date = doc.createElement("Fecha");
+                date.appendChild(doc.createTextNode(clients.getTime().toString()));
+                con.appendChild(date);
+
+                root.appendChild(con);
+            }
+            doc.appendChild(root);
+
+            Source source = new DOMSource(doc);
+
+            Result result = new StreamResult(new java.io.File("clientes.xml"));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+            aux = true;
+        } catch (ParserConfigurationException e) {
+
+        } catch (TransformerException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return aux;
     }
 
     @Override
     public boolean saveReservationsFromDDBB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean aux = false;
+        try {
+            DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
+            DocumentBuilder build;
+            build = dFact.newDocumentBuilder();
+            Document doc = build.newDocument();
+
+            Element root = doc.createElement("Repositorio");
+
+            for (Reservation reserves : re.reserves) {
+
+                Element con = doc.createElement("Reservas");
+
+                Element status = doc.createElement("Estado");
+                status.appendChild(doc.createTextNode(reserves.getStatus().toString()));
+                con.appendChild(status);
+
+                Element product = doc.createElement("Producto");
+                product.appendChild(doc.createTextNode(reserves.getPro().toString()));
+                con.appendChild(product);
+
+                Element iclient = doc.createElement("Cliente");
+                iclient.appendChild(doc.createTextNode(reserves.getCli().toString()));
+                con.appendChild(iclient);
+
+                Element ini = doc.createElement("Fecha inicio");
+                ini.appendChild(doc.createTextNode(reserves.getIni().toString()));
+                con.appendChild(ini);
+
+                Element end = doc.createElement("Fecha final");
+                end.appendChild(doc.createTextNode(reserves.getEnd().toString()));
+                con.appendChild(end);
+
+                Element finished = doc.createElement("Fecha entrega");
+                finished.appendChild(doc.createTextNode(reserves.getFinished().toString()));
+                con.appendChild(finished);
+
+                root.appendChild(con);
+            }
+            doc.appendChild(root);
+
+            Source source = new DOMSource(doc);
+
+            Result result = new StreamResult(new java.io.File("productos.xml"));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+            aux = true;
+
+        } catch (ParserConfigurationException e) {
+
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return aux;
     }
 
     @Override
