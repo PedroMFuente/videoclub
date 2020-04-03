@@ -21,6 +21,7 @@ import io.VideoClub.Model.RepositoryClient;
 import io.VideoClub.Model.RepositoryReserve;
 import io.VideoClub.Model.Reservation.StatusReserve;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,6 +32,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.ConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -46,6 +48,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -59,21 +62,16 @@ public class AppController implements IAppController {
 
     @Override
     public Set<Product> listAllProducts() {
-        Set<Product> aux = null;
-        for(Product p : pr.products){
-            if(p.getStatus().equals(Product.Status.AVAILABLE)){
-                aux.add(p);
-            }
-        }
-        return aux;
+       
+        return pr.products;
     }
 
     @Override
     public Set<Product> listAllProducts(Comparator c) {
         Set<Product> ordenado = new TreeSet<>(c);
         Set<Product> aux = null;
-        for(Product p : pr.products){
-            if(p.getStatus().equals(Product.Status.AVAILABLE)){
+        for (Product p : pr.products) {
+            if (p.getStatus().equals(Product.Status.AVAILABLE)) {
                 aux.add(p);
             }
         }
@@ -458,8 +456,8 @@ public class AppController implements IAppController {
 
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
-      return re.reserves.add(new Reservation(prod, client));
-       
+        return re.reserves.add(new Reservation(prod, client));
+
     }
 
     @Override
@@ -468,14 +466,14 @@ public class AppController implements IAppController {
         if (reserve != null) {
             reserve.setStatus(Reservation.StatusReserve.FINISHED);
             result = reserve.pro.getPrize();
-            
+
         }
 
         return result;
     }
 
     @Override
-    public boolean loadCatalogFromDDBB() {
+    public boolean loadCatalogFromDDBB(){
         boolean aux = false;
         try {
             File archivo = new File("productos.xml");
@@ -486,31 +484,55 @@ public class AppController implements IAppController {
 
             document.getDocumentElement().normalize();
 
-            System.out.println("Elemento raiz: " + document.getDocumentElement().getNodeName());
 
             NodeList e = document.getElementsByTagName("Producto");
+            if (e != null) {
+                for (int i = 0; i < e.getLength(); i++) {
+                    Node nodo = e.item(i);
+                    if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) nodo;
 
-            for (int i = 0; i < e.getLength(); i++) {
-                Node nodo = e.item(i);
-                System.out.println("Elemento: " + nodo.getNodeName());
+                        String n = element.getElementsByTagName("Nombre").item(0).getTextContent();
+                        String d = element.getElementsByTagName("Descripcion").item(0).getTextContent();
+                        double p = Integer.valueOf(element.getElementsByTagName("Precio").item(0).getTextContent());
+                        String k = element.getElementsByTagName("Key").item(0).getTextContent();
+                        //Status es= Status.valueOf(element.getElementsByTagName("Estado").item(0).getTextContent());
+                        ProductsTypes t = ProductsTypes.valueOf(element.getElementsByTagName("Tipo").item(0).getTextContent());
 
-                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) nodo;
+                        if (t == ProductsTypes.Juegos) {
+                            GameCategory g = GameCategory.valueOf(element.getElementsByTagName("GameCategory").item(0).getTextContent());
+                            int ed = Integer.valueOf(element.getElementsByTagName("Edad minima").item(0).getTextContent());
+                            Game ass = new Game(n, d, p, g, ed);
+                            pr.products.add(ass);
+                            ass.setKey(k);
+                            //  ass.setStatus();
 
-                    System.out.println("Nombre: " + element.getElementsByTagName("Nombre").item(0).getTextContent());
-                    System.out.println("Descripcion: " + element.getElementsByTagName("Descripcion").item(0).getTextContent());
-                    System.out.println("Precio: " + element.getElementsByTagName("Precio").item(0).getTextContent());
-                    System.out.println("Key: " + element.getElementsByTagName("Key").item(0).getTextContent());
-                    System.out.println("Estado: " + element.getElementsByTagName("Estado").item(0).getTextContent());
-                    System.out.println("Tipo: " + element.getElementsByTagName("Tipo").item(0).getTextContent());
+                        } else if (t == ProductsTypes.Peliculas) {
+                            MovieCategory m = MovieCategory.valueOf(element.getElementsByTagName("MovieCategory").item(0).getTextContent());
+                            int ed = Integer.valueOf(element.getElementsByTagName("Edad minima").item(0).getTextContent());
+                            Movie ass = new Movie(n, d, p, m, ed);
+                            pr.products.add(ass);
+                            ass.setKey(k);
+                        } else {
+                            Others o = new Others(n, d, p);
+                            o.setKey(k);
+                            pr.products.add(o);
 
-                    System.out.println("");
-                    aux = true;
+                        }
+
+                        aux = true;
+                    }
                 }
             }
 
-        } catch (Exception e) {
+        } catch (java.io.FileNotFoundException e ) {
             e.printStackTrace();
+        } catch (SAXException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return aux;
     }
@@ -527,30 +549,30 @@ public class AppController implements IAppController {
 
             document.getDocumentElement().normalize();
 
-            System.out.println("Elemento raiz: " + document.getDocumentElement().getNodeName());
-
             NodeList e = document.getElementsByTagName("Cliente");
+            if (e != null) {
+                for (int i = 0; i < e.getLength(); i++) {
+                    Node nodo = e.item(i);
 
-            for (int i = 0; i < e.getLength(); i++) {
-                Node nodo = e.item(i);
-                
-                if(nodo.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) nodo;
-                    String id= element.getElementsByTagName("ID").item(0).getTextContent();
-                    String n= element.getElementsByTagName("Nombre").item(0).getTextContent();
-                    String t= element.getElementsByTagName("Telefono").item(0).getTextContent();
-                    LocalDateTime l= LocalDateTime.parse(element.getElementsByTagName("Fecha").item(0).getTextContent());
-                    
-                    Client c=new Client (id,n,t,l);
-                    cl.clients.add(c);
-                    System.out.println("");
-                    aux=true;
+                    if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) nodo;
+                        String id = element.getElementsByTagName("ID").item(0).getTextContent();
+                        String n = element.getElementsByTagName("Nombre").item(0).getTextContent();
+                        String t = element.getElementsByTagName("Telefono").item(0).getTextContent();
+                        LocalDateTime l = LocalDateTime.parse(element.getElementsByTagName("Fecha").item(0).getTextContent());
+
+                        Client c = new Client(id, n, t, l);
+                        cl.clients.add(c);
+                        System.out.println("");
+                        aux = true;
+                    }
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return aux;
     }
 
@@ -558,7 +580,7 @@ public class AppController implements IAppController {
     public boolean loadReservationsFromDDBB() {
         boolean aux = false;
         try {
-            File archivo = new File("productos.xml");
+            File archivo = new File("reservations.xml");
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
@@ -566,32 +588,31 @@ public class AppController implements IAppController {
 
             document.getDocumentElement().normalize();
 
-            System.out.println("Elemento raiz: " + document.getDocumentElement().getNodeName());
-
             NodeList e = document.getElementsByTagName("Producto");
 
-            for (int i = 0; i < e.getLength(); i++) {
-                Node nodo = e.item(i);
+            if (e != null) {
+                for (int i = 0; i < e.getLength(); i++) {
+                    Node nodo = e.item(i);
 
-                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) nodo;
+                    if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) nodo;
 
-                    StatusReserve r = StatusReserve.valueOf(element.getElementsByTagName("Estado").item(0).getTextContent());
-                    Product p = Product.class.cast(element.getElementsByTagName("Producto").item(0).getTextContent());
-                    IClient c = IClient.class.cast(element.getElementsByTagName("Cliente").item(0).getTextContent());
-                    LocalDate in = LocalDate.parse(element.getElementsByTagName("FechaInicio").item(0).getTextContent());
-                    LocalDate ed = LocalDate.parse(element.getElementsByTagName("FechaFinal").item(0).getTextContent());
-                    LocalDate fi = LocalDate.parse(element.getElementsByTagName("FechaEntrega").item(0).getTextContent());
+                        StatusReserve r = StatusReserve.valueOf(element.getElementsByTagName("Estado").item(0).getTextContent());
+                        Product p = Product.class.cast(element.getElementsByTagName("Producto").item(0).getTextContent());
+                        IClient c = IClient.class.cast(element.getElementsByTagName("Cliente").item(0).getTextContent());
+                        LocalDate in = LocalDate.parse(element.getElementsByTagName("FechaInicio").item(0).getTextContent());
+                        LocalDate ed = LocalDate.parse(element.getElementsByTagName("FechaFinal").item(0).getTextContent());
+                        LocalDate fi = LocalDate.parse(element.getElementsByTagName("FechaEntrega").item(0).getTextContent());
 
-                    Reservation ass = new Reservation(p, c);
-                    ass.setIni(in);
-                    ass.setEnd(ed);
-                    ass.setFinished(fi);
-                    re.reserves.add(ass);
-                    aux = true;
+                        Reservation ass = new Reservation(p, c);
+                        ass.setIni(in);
+                        ass.setEnd(ed);
+                        ass.setFinished(fi);
+                        re.reserves.add(ass);
+                        aux = true;
+                    }
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -776,7 +797,5 @@ public class AppController implements IAppController {
     public boolean saveAllDDBB() {
         return saveCatalogFromDDBB() && saveClientsFromDDBB() && saveReservationsFromDDBB();
     }
-    
-   
 
 }

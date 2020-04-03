@@ -5,7 +5,7 @@
  */
 package io.VideoClub.Comparators;
 
-import io.VideoClub.Model.Client;
+import io.VideoClub.Model.IClient;
 import io.VideoClub.Model.Enums.SortOptions;
 import java.util.Comparator;
 
@@ -13,7 +13,7 @@ import java.util.Comparator;
  *
  * @author migue
  */
-public class ClientComparator implements Comparator<Client> {
+public class ClientComparator implements Comparator<IClient> {
     
     private SortOptions option;
 
@@ -25,7 +25,7 @@ public class ClientComparator implements Comparator<Client> {
         this.option = option;
     }
     @Override
-    public int compare(Client o1, Client o2) {
+    public int compare(IClient o1, IClient o2) {
         SortOptions opcion = option;
          int result = 0;
         switch(opcion){

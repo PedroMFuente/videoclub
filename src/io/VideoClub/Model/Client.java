@@ -12,12 +12,12 @@ import java.util.Objects;
  *
  * @author migue
  */
-public class Client implements IClient {
+public class Client implements IClient, Comparable<IClient> {
+
     private String ID;
     private String name;
     private LocalDateTime time;
     private String phone;
-   
 
     public Client(String ID, String name, String phone, LocalDateTime time) {
         this.ID = ID;
@@ -26,8 +26,6 @@ public class Client implements IClient {
         this.time = time;
     }
 
-
-    
     @Override
     public String getID() {
         return ID;
@@ -40,7 +38,7 @@ public class Client implements IClient {
 
     @Override
     public void setName(String n) {
-      this.name = n;
+        this.name = n;
     }
 
     @Override
@@ -86,11 +84,15 @@ public class Client implements IClient {
         }
         return true;
     }
-    
 
     @Override
     public String toString() {
         return "Client{" + "ID=" + ID + ", name=" + name + ", time=" + time + ", phone=" + phone + '}';
     }
-    
+
+    @Override
+    public int compareTo(IClient o) {
+        return this.ID.compareTo(o.getID());
+    }
+
 }

@@ -22,6 +22,7 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
 
     public Product(String name, String description, double prize) {
         super(name, description, prize);
+        this.status = Status.AVAILABLE;
         this.type=Otros;
         this.key = generateRandom16Chars();
     }

@@ -37,16 +37,17 @@ public class GUI {
 
     public static void principal() {
         int opcion = 0;
-
+        control.loadAllDDBB();
         do {
             System.out.println("Que desea saber ");
             System.out.println("1) Producto");
             System.out.println("2) Cliente");
             System.out.println("3) Reserva");
-            System.out.println("4) Salir");
+            System.out.println("4) Guardar");
+            System.out.println("5) Salir");
             opcion = u.tecladoI();
 
-        } while (opcion < 1 || opcion > 4);
+        } while (opcion < 1 || opcion > 5);
 
         switch (opcion) {
             case 1:
@@ -62,46 +63,52 @@ public class GUI {
                 break;
 
             case 4:
+                control.saveAllDDBB();
+                break;
+
+            case 5:
                 break;
 
         }
     }
 
     public static void product() {
+
         int opcion = 0;
         do {
-            System.out.println("1) Crear producto");
-            System.out.println("2) Editar producto");
-            System.out.println("3) Listar producto");
-            System.out.println("4) Borrar producto");
-            System.out.println("5) Salir");
-            opcion = u.tecladoI();
-        } while (opcion < 1 || opcion > 5);
+            do {
+                System.out.println("1) Crear producto");
+                System.out.println("2) Editar producto");
+                System.out.println("3) Listar producto");
+                System.out.println("4) Borrar producto");
+                System.out.println("5) Salir");
+                opcion = u.tecladoI();
+            } while (opcion < 1 || opcion > 5);
 
-        switch (opcion) {
-            case 1:
-                createProduct();
-                break;
+            switch (opcion) {
+                case 1:
+                    createProduct();
+                    break;
 
-            case 2:
+                case 2:
 
-                editProduct();
-                break;
+                    editProduct();
+                    break;
 
-            case 3:
-                listProduct();
-                break;
+                case 3:
+                    listProduct();
+                    break;
 
-            case 4:
-                removeProduct();
-                break;
+                case 4:
+                    removeProduct();
+                    break;
 
-            case 5:
+                case 5:
 
-                break;
+                    break;
 
-        }
-
+            }
+        } while (opcion != 5);
     }
 
     public static void editProduct() {
@@ -235,21 +242,20 @@ public class GUI {
         }
     }
 
-    
-    public static void createReserve() {    
+    public static void createReserve() {
         int opcion = 0;
         Set<Product> aux = null;
         Product p = null;
         IClient c = null;
         System.out.println("Introduce el nombre del producto que quieres reservar:");
         String name = u.tecladoS();
-        do{
-        System.out.println("-----Tipo de producto-------");
-        System.out.println("1)Pelicula \n 2)Juego \n 3)Otros");
-        opcion = u.tecladoI();
-        }while(opcion < 1 || opcion > 3);
-        
-        switch(opcion){
+        do {
+            System.out.println("-----Tipo de producto-------");
+            System.out.println("1)Pelicula \n 2)Juego \n 3)Otros");
+            opcion = u.tecladoI();
+        } while (opcion < 1 || opcion > 3);
+
+        switch (opcion) {
             case 1:
                 aux = control.listAllByName(name, ProductsTypes.Peliculas);
                 break;
@@ -260,32 +266,31 @@ public class GUI {
                 aux = control.listAllByName(name, ProductsTypes.Otros);
                 break;
         }
-        
-        
-        if(aux.isEmpty()){
+
+        if (aux.isEmpty()) {
             System.out.println("No se encuentra ningun producto con ese nombre");
         } else {
-             System.out.println("----------Productos----------");
-             for(Product pr : aux){
-                 p = pr;
-                 break;
-             }
-             System.out.println("Introduce tu dni");
-             String nameC = u.tecladoS();
-             
-             for(IClient client : cl.clients){
-                 if(client.getID().equals(nameC)){
-                     c = client;
-                     break;
-                 }   
-             }
-             
-          if(c != null && p != null){
-                 control.reserveProduct(p, c);
-             }
-             
+            System.out.println("----------Productos----------");
+            for (Product pr : aux) {
+                p = pr;
+                break;
+            }
+            System.out.println("Introduce tu dni");
+            String nameC = u.tecladoS();
+
+            for (IClient client : cl.clients) {
+                if (client.getID().equals(nameC)) {
+                    c = client;
+                    break;
+                }
+            }
+
+            if (c != null && p != null) {
+                control.reserveProduct(p, c);
+            }
+
         }
-        
+
     }
 
     public static void listReserve() {
@@ -343,7 +348,7 @@ public class GUI {
 
         for (Reservation reserve : re.reserves) {
             if (reserve.cli.getName().equals(name) && reserve.pro.getName().equals(name2)) {
-                System.out.println("El total de su reserva ha sido: "+control.closeReservation(reserve)+"€" );
+                System.out.println("El total de su reserva ha sido: " + control.closeReservation(reserve) + "€");
                 break;
             }
 
@@ -513,7 +518,8 @@ public class GUI {
         switch (opcion) {
 
             case 1:
-                u.listProductS(control.listAllProducts());
+                Set<Product> aux11 = control.listAllProducts();
+                u.listProductS(aux11); 
                 break;
             case 2:
                 sortProduct();
