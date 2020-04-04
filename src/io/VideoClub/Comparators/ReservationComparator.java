@@ -29,7 +29,7 @@ public class ReservationComparator implements Comparator<Reservation> {
     public ReservationComparator(SortOptions option) {
         this.option = option;
     }
-    
+
     @Override
     public int compare(Reservation o1, Reservation o2) {
         SortOptions opcion = option;
@@ -63,13 +63,13 @@ public class ReservationComparator implements Comparator<Reservation> {
 
             //RESERVATION SORT
             case DatePlusR:
-
+                result = o1.getIni().compareTo(o2.getIni());
                 break;
 
             case DateLessR:
-               
-                
+                result = o2.getIni().compareTo(o1.getIni());
                 break;
+
             default:
                 break;
 
