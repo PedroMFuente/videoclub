@@ -259,7 +259,6 @@ public class GUI {
                     break;
 
                 case 4:
-                    control.saveReservationsFromDDBB();
                     principal();
                     break;
 
@@ -311,7 +310,11 @@ public class GUI {
             }
 
             if (c != null && p != null) {
-                control.reserveProduct(p, c);
+                if(control.reserveProduct(p, c)){
+                    System.out.println("Se ha completado la reserva");
+                } else {
+                    System.out.println("No se ha completado la reserva");
+                }
             }
 
         }
@@ -337,7 +340,8 @@ public class GUI {
         switch (opcion) {
 
             case 1:
-                u.listReservationS(control.listAllReservations());
+                Set<Reservation> re = control.listAllReservations();
+                u.listReservationS(re);
                 break;
             case 2:
                 do {

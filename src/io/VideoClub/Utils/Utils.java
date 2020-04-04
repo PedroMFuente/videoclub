@@ -60,7 +60,7 @@ public class Utils {
 
     public void listReservationS(Set<Reservation> reservations) {
         if (reservations != null) {
-            if (reservations.isEmpty()) {
+            if (!reservations.isEmpty()) {
                 for (Reservation r : reservations) {
                     System.out.println(r);
                 }

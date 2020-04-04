@@ -486,7 +486,9 @@ public class AppController implements IAppController {
 
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
-        return re.reserves.add(new Reservation(prod, client));
+        Reservation r = new Reservation(prod, client);
+        prod.setStatus(Product.Status.RESERVED);
+        return re.reserves.add(r);
 
     }
 
@@ -495,6 +497,7 @@ public class AppController implements IAppController {
         double result = 0;
         if (reserve != null) {
             reserve.setStatus(Reservation.StatusReserve.FINISHED);
+            reserve.pro.setStatus(Product.Status.AVAILABLE);
             result = reserve.pro.getPrize();
 
         }
