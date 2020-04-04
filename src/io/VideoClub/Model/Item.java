@@ -39,7 +39,7 @@ public abstract class Item  {
 
     @Override
     public String toString() {
-        return "name=" + name + ", description=" + description + ", prize=" + prize + '}';
+        return "nombre: " + name + ", description: " + description + ", prize: " + prize ;
     }
     
 }

@@ -24,6 +24,11 @@ public class ClientComparator implements Comparator<IClient> {
     public void setOption(SortOptions option) {
         this.option = option;
     }
+
+    public ClientComparator(SortOptions option) {
+        this.option = option;
+    }
+    
     @Override
     public int compare(IClient o1, IClient o2) {
         SortOptions opcion = option;

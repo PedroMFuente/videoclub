@@ -2,7 +2,7 @@ package io.VideoClub.Model;
 
 import java.time.LocalDateTime;
 
-public interface IClient {
+public interface IClient extends Comparable<IClient> {
     String getID();  //is UNIQUE in SYSTEM
     String getName();
     void setName(String n);

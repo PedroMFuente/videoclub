@@ -383,36 +383,31 @@ public class GUI {
         switch (opcion) {
             case 1:
                 result = SortOptions.AToZC;
-                clientComparator.setOption(result);
                 break;
             case 2:
                 result = SortOptions.AToZP;
-                clientComparator.setOption(result);
                 break;
             case 3:
                 result = SortOptions.Phone;
-                clientComparator.setOption(result);
                 break;
             case 4:
                 result = SortOptions.IDMinToMax;
-                clientComparator.setOption(result);
                 break;
             case 5:
                 result = SortOptions.IDMaxToMin;
-                clientComparator.setOption(result);
                 break;
             default:
                 break;
         }
-        Set<IClient> muestra = control.listAllClients(new ClientComparator());
+        Set<IClient> muestra = control.listAllClients(new ClientComparator(result));
         for (IClient c : muestra) {
             System.out.println(c);
         }
     }
 
     public static void sortProduct() {
-        SortOptions result = null;
         int opcion = 0;
+        SortOptions result = null;
         do {
             System.out.println("-----Ordenar Productos-----");
             System.out.println("1)Ordenar de la A la Z a los productos");
@@ -421,17 +416,15 @@ public class GUI {
         } while (opcion < 1 || opcion > 2);
         switch (opcion) {
             case 1:
-                result = SortOptions.AToZP;
-                productComparator.setOption(result);
+                result = SortOptions.AToZP;                      
                 break;
             case 2:
                 result = SortOptions.ZtoAP;
-                productComparator.setOption(result);
                 break;
             default:
                 break;
-        }
-        Set<Product> muestra = control.listAllProducts(new ProductComparator());
+        } 
+        Set<Product> muestra = control.listAllProducts(new ProductComparator(result));
         for (Product p : muestra) {
             System.out.println(p);
         }
@@ -456,47 +449,38 @@ public class GUI {
         } while (opcion < 1 || opcion > 9);
         switch (opcion) {
             case 1:
-                result = SortOptions.AToZC;
-                reservationComparator.setOption(result);
+                result = SortOptions.AToZC;                
                 break;
             case 2:
-                result = SortOptions.AToZP;
-                reservationComparator.setOption(result);
+                result = SortOptions.ZtoAC;
                 break;
             case 3:
                 result = SortOptions.Phone;
-                reservationComparator.setOption(result);
                 break;
             case 4:
                 result = SortOptions.IDMinToMax;
-                reservationComparator.setOption(result);
                 break;
             case 5:
                 result = SortOptions.IDMaxToMin;
-                reservationComparator.setOption(result);
                 break;
             case 6:
                 result = SortOptions.AToZP;
-                reservationComparator.setOption(result);
                 break;
             case 7:
                 result = SortOptions.ZtoAP;
-                reservationComparator.setOption(result);
                 break;
             case 8:
                 result = SortOptions.DatePlusR;
-                reservationComparator.setOption(result);
                 break;
             case 9:
                 result = SortOptions.DateLessR;
-                reservationComparator.setOption(result);
                 break;
 
             default:
                 break;
 
         }
-        Set<Reservation> muestra = control.listAllReservations(new ReservationComparator());
+        Set<Reservation> muestra = control.listAllReservations(new ReservationComparator(result));
         for (Reservation r : muestra) {
             System.out.println(r);
         }
@@ -512,7 +496,7 @@ public class GUI {
         do {
 
             System.out.println("1) Listar todos los productos");
-            System.out.println("2) Listar todos los productos con filtro");
+            System.out.println("2) Listar todos los productos ordenados");
             System.out.println("3) Listar todos los productos por tipo");
             System.out.println("4) Listar por nombre");
             System.out.println("5) Listar por nombre y tipo");

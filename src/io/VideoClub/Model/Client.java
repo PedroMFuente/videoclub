@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author migue
  */
-public class Client implements IClient, Comparable<IClient> {
+public class Client implements IClient{
 
     private String ID;
     private String name;

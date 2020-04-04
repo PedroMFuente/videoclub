@@ -19,4 +19,5 @@ public class Others extends Product{
         return (Others) clone;
    }
     
+    
 }

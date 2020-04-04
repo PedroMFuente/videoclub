@@ -26,6 +26,10 @@ public class ReservationComparator implements Comparator<Reservation> {
         this.option = option;
     }
 
+    public ReservationComparator(SortOptions option) {
+        this.option = option;
+    }
+    
     @Override
     public int compare(Reservation o1, Reservation o2) {
         SortOptions opcion = option;

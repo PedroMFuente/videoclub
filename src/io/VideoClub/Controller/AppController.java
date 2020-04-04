@@ -32,7 +32,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.ConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -69,13 +68,16 @@ public class AppController implements IAppController {
     @Override
     public Set<Product> listAllProducts(Comparator c) {
         Set<Product> ordenado = new TreeSet<>(c);
-        Set<Product> aux = null;
+        Set<Product> aux = new TreeSet<>();
+        
         for (Product p : pr.products) {
             if (p.getStatus().equals(Product.Status.AVAILABLE)) {
                 aux.add(p);
             }
         }
-        ordenado.addAll(aux);
+        if(!aux.isEmpty()){
+            ordenado.addAll(aux);
+        } 
         return ordenado;
     }
 

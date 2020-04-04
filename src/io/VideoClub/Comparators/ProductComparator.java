@@ -23,6 +23,10 @@ public class ProductComparator implements Comparator<Product>  {
     public void setOption(SortOptions option) {
         this.option = option;
     }
+
+    public ProductComparator(SortOptions option) {
+        this.option = option;
+    }
     
     
     @Override

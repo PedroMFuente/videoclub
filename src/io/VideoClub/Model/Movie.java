@@ -30,11 +30,9 @@ public class Movie extends Product{
     public void setMinAge(int minAge) {
         this.minAge = minAge;
     }
+
+     
     
-    @Override
-    public String toString() {
-        return "Pelicula{" +super.toString()+ " category=" + category + " edad minima=" + minAge + '}';
-    }
     
     public Movie clone()throws CloneNotSupportedException {
         Product clone = (Product) super.clone(); //To change body of generated methods, choose Tools | Templates.

@@ -34,7 +34,7 @@ public class Game extends Product{
 
     @Override
     public String toString() {
-        return "Juego{" +super.toString()+ " category=" + category + " edad minima=" + minAge + '}';
+        return "Juego " + super.toString()+ " categoria: " + category + " edad minima: " + minAge;
     }
 
    public Game clone()throws CloneNotSupportedException {
