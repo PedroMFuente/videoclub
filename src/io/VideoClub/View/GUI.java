@@ -169,8 +169,9 @@ public class GUI {
     public static void editClient() {
         System.out.println("Introduce el id del cliente a modificar: ");
         String ID = u.tecladoS();
-        IClient c = control.isAvailableClient(ID);
-        if (c != null) {
+        IClient c;
+        if (control.isAvailableClient(ID)) {
+            c = createClients();
             control.editClient(c);
         } else {
             System.out.println("No se ha podido editar el cliente");
@@ -719,7 +720,20 @@ public class GUI {
                 break;
         }
     }
+        public static IClient createClients() {
+        System.out.println("Introduce el ID del cliente");
+        String idC = u.tecladoS();
 
+        System.out.println("Introduce el nombre");
+        String nameC = u.tecladoS();
+
+        System.out.println("Introduce numero de telefono");
+        String phoneC = u.tecladoS();
+
+        Client c = new Client(idC, nameC, phoneC, LocalDateTime.now());
+
+        return c;
+    }
     public static void createClient() {
 
         System.out.println("Introduce el ID del cliente");
