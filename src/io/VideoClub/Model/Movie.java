@@ -31,6 +31,11 @@ public class Movie extends Product{
         this.minAge = minAge;
     }
 
+    @Override
+    public String toString() {
+        return "Pelicula" + super.toString() + "category=" + category + ", minAge=" + minAge + '}';
+    }
+
      
     
     

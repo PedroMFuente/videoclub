@@ -18,6 +18,11 @@ public class Others extends Product{
         Product clone = (Product) super.clone(); //To change body of generated methods, choose Tools | Templates.
         return (Others) clone;
    }
+
+    @Override
+    public String toString() {
+        return "Otros" + super.toString();
+    }
     
     
 }

@@ -1,6 +1,7 @@
 package io.VideoClub.Model;
 
 import io.VideoClub.Model.Enums.GameCategory;
+import io.VideoClub.Model.Enums.ProductsTypes;
 
 public class Game extends Product{
     private GameCategory category;
@@ -10,6 +11,7 @@ public class Game extends Product{
     
     public Game(String name, String description,double prize, GameCategory category, int minAge){
         super(name,description,prize);
+        this.type = ProductsTypes.Juegos;
         this.category=category;
         this.minAge = minAge;
     }
@@ -34,7 +36,7 @@ public class Game extends Product{
 
     @Override
     public String toString() {
-        return "Juego " + super.toString()+ " categoria: " + category + " edad minima: " + minAge;
+        return "Juego" + super.toString()+ " categoria: " + category + " edad minima: " + minAge;
     }
 
    public Game clone()throws CloneNotSupportedException {

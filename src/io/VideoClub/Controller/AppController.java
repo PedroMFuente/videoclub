@@ -335,12 +335,16 @@ public class AppController implements IAppController {
 
     @Override
     public boolean createMovie(ProductsTypes type, String name, String description, double precio, MovieCategory cat, int minAge) {
-        return pr.products.add(new Movie(name, description, precio, cat, minAge));
+        Movie m = new Movie(name, description, precio, cat, minAge);
+        m.setType(ProductsTypes.Peliculas);
+        return pr.products.add(m);
     }
 
     @Override
     public boolean createGame(ProductsTypes type, String name, String description, double precio, GameCategory cat, int minAge) {
-        return pr.products.add(new Game(name, description, precio, cat, minAge));
+        Game g = new Game(name, description, precio, cat, minAge);
+        g.setType(ProductsTypes.Peliculas);
+        return pr.products.add(g);
     }
 
     @Override
