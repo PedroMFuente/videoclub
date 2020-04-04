@@ -84,9 +84,10 @@ public class GUI {
                 System.out.println("2) Editar producto");
                 System.out.println("3) Listar producto");
                 System.out.println("4) Borrar producto");
-                System.out.println("5) Volver atrás");
+                System.out.println("5) Clonar");
+                System.out.println("6) Volver atrás");
                 opcion = u.tecladoI();
-            } while (opcion < 1 || opcion > 5);
+            } while (opcion < 1 || opcion > 6);
 
             switch (opcion) {
                 case 1:
@@ -107,18 +108,28 @@ public class GUI {
                     break;
 
                 case 5:
+                    clonar();
+                    break;
+                case 6:
                     control.saveCatalogFromDDBB();
                     principal();
                     break;
 
             }
-        } while (opcion != 5);
+        } while (opcion != 6);
+    }
+
+    public static void clonar() {
+        System.out.println("Introduzca el nombre");
+        String name = u.tecladoS();
+        control.addProduct(name);
+
     }
 
     public static void editProduct() {
         System.out.println("Introduce la clave del producto que quieres editar");
         String key = u.tecladoS();
-        
+
         if (control.isAvailableProductb(key)) {
             Product p = createProducts();
             p.setKey(key);
@@ -131,41 +142,44 @@ public class GUI {
     public static void client() {
         int opcion = 0;
         do {
-            System.out.println("1) Crear cliente");
-            System.out.println("2) Editar cliente");
-            System.out.println("3) Listar cliente");
-            System.out.println("4) Borrar cliente");
-            System.out.println("5) FALTAA"); //FALTA
-            System.out.println("6) Volver atrás");
-            opcion = u.tecladoI();
-        } while (opcion < 1 || opcion > 6);
+            do {
+                System.out.println("1) Crear cliente");
+                System.out.println("2) Editar cliente");
+                System.out.println("3) Listar cliente");
+                System.out.println("4) Borrar cliente");
+                System.out.println("5) Volver atrás");
+                opcion = u.tecladoI();
+            } while (opcion < 1 || opcion > 5);
 
-        switch (opcion) {
-            case 1:
-                createClient();
-                break;
-            case 2:
-                editClient();
-                break;
+            switch (opcion) {
+                case 1:
+                    createClient();
+                    break;
+                case 2:
+                    editClient();
+                    break;
 
-            case 3:
-                listClient();
-                break;
+                case 3:
+                    listClient();
+                    break;
 
-            case 4:
-                removeClient();
-                break;
+                case 4:
+                    removeClient();
+                    break;
 
-            case 5:
-                control.saveClientsFromDDBB();
-                principal();
-                break;
+                case 5:
+                    control.saveClientsFromDDBB();
+                    principal();
+                    break;
 
-        }
+                default:
+                    break;
+
+            }
+        } while (opcion != 5);
 
     }
 
-    
     public static void editClient() {
         System.out.println("Introduce el id del cliente a modificar: ");
         String ID = u.tecladoS();
@@ -219,36 +233,37 @@ public class GUI {
 
     public static void reserve() {
         int opcion = 0;
-
         do {
-            System.out.println("1) Crear reserva");
-            System.out.println("2) Listar reserva");
-            System.out.println("3) Terminar reserva");
-            System.out.println("4) Volver atrás");
+            do {
+                System.out.println("1) Crear reserva");
+                System.out.println("2) Listar reserva");
+                System.out.println("3) Terminar reserva");
+                System.out.println("4) Volver atrás");
 
-            opcion = u.tecladoI();
+                opcion = u.tecladoI();
 
-        } while (opcion < 1 || opcion > 4);
+            } while (opcion < 1 || opcion > 4);
 
-        switch (opcion) {
-            case 1:
-                createReserve();
-                break;
+            switch (opcion) {
+                case 1:
+                    createReserve();
+                    break;
 
-            case 2:
-                listReserve();
-                break;
+                case 2:
+                    listReserve();
+                    break;
 
-            case 3:
-                finishReserve();
-                break;
+                case 3:
+                    finishReserve();
+                    break;
 
-            case 4:
-                control.saveReservationsFromDDBB();
-                principal();
-                break;
+                case 4:
+                    control.saveReservationsFromDDBB();
+                    principal();
+                    break;
 
-        }
+            }
+        } while (opcion != 4);
     }
 
     public static void createReserve() {
@@ -732,9 +747,9 @@ public class GUI {
         String phoneC = u.tecladoS();
 
         control.createClient(idC, nameC, phoneC, LocalDateTime.now());
+
     }
 
-   
     public static Product createProducts() {
         Product p = null;
 

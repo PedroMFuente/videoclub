@@ -55,12 +55,14 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
         this.status = status;
     }
 
+    
+    
     public boolean equals(Object o) {
         boolean result = false;
         if (o != null) {
             if (o instanceof Product) {
                 Product other = (Product) o;
-                if (other.key.equals(other.key)) {
+                if (other.key.equals(this.key)) {
                     result = true;
                 }
             }
@@ -84,6 +86,6 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
 
     @Override
     public int compareTo(Product o) {
-         return this.name.compareTo(o.getName());
+         return this.key.compareTo(o.getKey());
     }
 }
