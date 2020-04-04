@@ -496,6 +496,7 @@ public class AppController implements IAppController {
     public double closeReservation(Reservation reserve) {
         double result = 0;
         if (reserve != null) {
+            reserve.setFinished(LocalDate.now());
             reserve.setStatus(Reservation.StatusReserve.FINISHED);
             reserve.pro.setStatus(Product.Status.AVAILABLE);
             result = reserve.pro.getPrize();

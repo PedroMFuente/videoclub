@@ -1,4 +1,3 @@
-
 import io.VideoClub.View.GUI;
 
 public class App {

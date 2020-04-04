@@ -91,7 +91,7 @@ public class Reservation implements Comparable<Reservation>{
                 Reservation other=(Reservation)o;
                 if(this.pro.equals(other.pro) 
                         &&this.cli.equals(other.cli)
-                        &&this.ini.equals(other.cli)
+                        &&this.ini.equals(other.ini)
                         &&this.end.equals(other.end)
                         &&this.status==other.status){
                     result=true;

@@ -19,6 +19,7 @@ import io.VideoClub.Model.RepositoryProduct;
 import io.VideoClub.Model.RepositoryReserve;
 import io.VideoClub.Model.Reservation;
 import io.VideoClub.Utils.Utils;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.Set;
