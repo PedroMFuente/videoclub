@@ -46,11 +46,12 @@ public class GUI {
             System.out.println("1) Producto");
             System.out.println("2) Cliente");
             System.out.println("3) Reserva");
-            System.out.println("4) Guardar");
-            System.out.println("5) Salir");
+            System.out.println("4) Ganancias");
+            System.out.println("5) Guardar");
+            System.out.println("6) Salir");
             opcion = u.tecladoI();
 
-        } while (opcion < 1 || opcion > 5);
+        } while (opcion < 1 || opcion > 6);
 
         switch (opcion) {
             case 1:
@@ -66,15 +67,18 @@ public class GUI {
                 break;
 
             case 4:
-                control.saveAllDDBB();
+                profit();
                 break;
 
             case 5:
+                control.saveAllDDBB();
+                break;
+
+            case 6:
                 break;
 
         }
     }
-
     public static void product() {
         int opcion = 0;
         do {
@@ -265,7 +269,64 @@ public class GUI {
             }
         } while (opcion != 4);
     }
+    public static void profit() {
+        int opcion = 0;
+        do{
+        do {
+            System.out.println("Listado de Ganacias");
+            System.out.println("1)Ganancias totales");
+            System.out.println("2)Ganancias totales en un dia");
+            System.out.println("3)Ganancias totales entre un dia y otro");
+            System.out.println("4)Volver atrás");
+            opcion = u.tecladoI();
+        } while (opcion < 1 || opcion > 4);
 
+        switch (opcion) {
+            case 1:
+                System.out.println(control.getIncommings());
+                break;
+            case 2:
+                LocalDate fecha = null;
+                System.out.println("Introduzca el dia - DD)");
+                int dia = u.tecladoI();
+                System.out.println("Introduzca el mes - MM )");
+                int mes = u.tecladoI();
+                System.out.println("Introduzca el año año - XXXX)");
+                int año = u.tecladoI();
+
+                fecha.of(dia, mes, año);
+                System.out.println(control.getIncommings(fecha));
+                break;
+            case 3:
+                LocalDate fecha1 = null;
+                LocalDate fecha2 = null;
+
+                System.out.println("Introduzca el dia - DD)");
+                int dia1 = u.tecladoI();
+                System.out.println("Introduzca el mes - MM )");
+                int mes1 = u.tecladoI();
+                System.out.println("Introduzca el año año - XXXX)");
+                int año1 = u.tecladoI();
+                fecha1.of(dia1, mes1, año1);
+                System.out.println("Introduzca el dia - DD)");
+                int dia2 = u.tecladoI();
+                System.out.println("Introduzca el mes - MM )");
+                int mes2 = u.tecladoI();
+                System.out.println("Introduzca el año año - XXXX)");
+                int año2 = u.tecladoI();
+
+                fecha2.of(dia2, mes2, año2);
+
+                System.out.println(control.getIncommings(fecha1, fecha2));
+                break;
+            case 4:
+                principal();
+                break;
+        }
+        }while(opcion!=4);
+
+    }
+    
     public static void createReserve() {
         int opcion = 0;
         Set<Product> aux = null;
