@@ -231,17 +231,17 @@ public class AppController implements IAppController {
         return result;
     }
     
-    public IClient isAvailableClient(String id){
-        IClient client = null;
+    public boolean isAvailableClient(String id){
+        boolean result = false;
         
         for(IClient c : cl.clients){
             if(c.getID().equals(id)){
-                client = c;
+                result = true;
                 break;
             }
         }
         
-        return client;
+        return result;
     }
     
     @Override
