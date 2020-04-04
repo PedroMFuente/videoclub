@@ -21,36 +21,51 @@ public class Utils {
 
     public Utils() {
     }
-    
 
     public void listProductS(Set<Product> products) {
         if (products != null) {
-            for (Product p : products) {
-                System.out.println(p);
+            if (!products.isEmpty()) {
+                for (Product p : products) {
+                    System.out.println(p);
+                }
+            } else {
+                System.out.println("Repositorio productos vacio, comorueba que haya productos guardados");
             }
         }
     }
 
     public void listProductL(List<Product> products) {
         if (products != null) {
-            for (Product p : products) {
-                System.out.println(p);
+            if (!products.isEmpty()) {
+                for (Product p : products) {
+                    System.out.println(p);
+                }
+            } else {
+                System.out.println("Repositorio productos vacio, comorueba que haya productos guardados");
             }
         }
     }
 
     public void listClientS(Set<IClient> clients) {
         if (clients != null) {
-            for (IClient c : clients) {
-                System.out.println(c);
+            if (!clients.isEmpty()) {
+                for (IClient c : clients) {
+                    System.out.println(c);
+                }
+            } else {
+                System.out.println("Repositorio clientes vacio, comorueba que haya clientes guardados");
             }
         }
     }
 
     public void listReservationS(Set<Reservation> reservations) {
         if (reservations != null) {
-            for (Reservation r : reservations) {
-                System.out.println(r);
+            if (reservations.isEmpty()) {
+                for (Reservation r : reservations) {
+                    System.out.println(r);
+                }
+            } else {
+                System.out.println("Repositorio reservations vacio, comorueba que haya reservations guardados");
             }
         }
     }
@@ -62,7 +77,6 @@ public class Utils {
         }
 
     }
-    
 
     public int tecladoI() {
         int result = 0;

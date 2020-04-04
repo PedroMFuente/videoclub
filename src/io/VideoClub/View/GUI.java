@@ -40,7 +40,7 @@ public class GUI {
         System.out.println("Para guardar hay que darle a volver a atras");
         System.out.println("--------------------------------------------");
         System.out.println(" ");
-        
+
         do {
             System.out.println("Que desea saber ");
             System.out.println("1) Producto");
@@ -118,14 +118,14 @@ public class GUI {
     public static void editProduct() {
         System.out.println("Introduce la clave del producto que quieres editar");
         String key = u.tecladoS();
-        Product p = createProducts();
-        p.setKey(key);
-        if (control.editProduct(key, p)) {
-            System.out.println("Producto editado correctamente");
+        
+        if (control.isAvailableProductb(key)) {
+            Product p = createProducts();
+            p.setKey(key);
+            control.editProduct(key, p);
         } else {
-            System.out.println("Comprueba que la key este correcta");
+            System.out.println("No se ha podido editar el producto");
         }
-
     }
 
     public static void client() {
@@ -165,13 +165,13 @@ public class GUI {
 
     }
 
-    //FALTA
+    
     public static void editClient() {
         System.out.println("Introduce el id del cliente a modificar: ");
         String ID = u.tecladoS();
-        IClient c = createClients();
-        if (control.editClient(c)) {
-            System.out.println("Cliente editado correctamente");
+        IClient c = control.isAvailableClient(ID);
+        if (c != null) {
+            control.editClient(c);
         } else {
             System.out.println("No se ha podido editar el cliente");
         }
@@ -400,8 +400,12 @@ public class GUI {
                 break;
         }
         Set<IClient> muestra = control.listAllClients(new ClientComparator(result));
-        for (IClient c : muestra) {
-            System.out.println(c);
+        if (!muestra.isEmpty()) {
+            for (IClient c : muestra) {
+                System.out.println(c);
+            }
+        } else {
+            System.out.println("Repositorio clientes vacio, comprueba que haya clientes guardados");
         }
     }
 
@@ -416,19 +420,22 @@ public class GUI {
         } while (opcion < 1 || opcion > 2);
         switch (opcion) {
             case 1:
-                result = SortOptions.AToZP;                      
+                result = SortOptions.AToZP;
                 break;
             case 2:
                 result = SortOptions.ZtoAP;
                 break;
             default:
                 break;
-        } 
-        Set<Product> muestra = control.listAllProducts(new ProductComparator(result));
-        for (Product p : muestra) {
-            System.out.println(p);
         }
-
+        Set<Product> muestra = control.listAllProducts(new ProductComparator(result));
+        if (!muestra.isEmpty()) {
+            for (Product p : muestra) {
+                System.out.println(p);
+            }
+        } else {
+            System.out.println("Repositorio producto esta vacio, compruebe que haya productos guardados");
+        }
     }
 
     public static void sortReservation() {
@@ -449,7 +456,7 @@ public class GUI {
         } while (opcion < 1 || opcion > 9);
         switch (opcion) {
             case 1:
-                result = SortOptions.AToZC;                
+                result = SortOptions.AToZC;
                 break;
             case 2:
                 result = SortOptions.ZtoAC;
@@ -481,9 +488,14 @@ public class GUI {
 
         }
         Set<Reservation> muestra = control.listAllReservations(new ReservationComparator(result));
-        for (Reservation r : muestra) {
-            System.out.println(r);
+        if (!muestra.isEmpty()) {
+            for (Reservation r : muestra) {
+                System.out.println(r);
+            }
+        } else {
+            System.out.println("Repositorio reservas vacio, compruebe que haya reservas guardadas");
         }
+
     }
 
     public static void listProduct() {
@@ -708,6 +720,21 @@ public class GUI {
         }
     }
 
+    public static void createClient() {
+
+        System.out.println("Introduce el ID del cliente");
+        String idC = u.tecladoS();
+
+        System.out.println("Introduce el nombre");
+        String nameC = u.tecladoS();
+
+        System.out.println("Introduce numero de telefono");
+        String phoneC = u.tecladoS();
+
+        control.createClient(idC, nameC, phoneC, LocalDateTime.now());
+    }
+
+   
     public static Product createProducts() {
         Product p = null;
 
@@ -779,34 +806,4 @@ public class GUI {
         }
         return p;
     }
-
-    public static void createClient() {
-
-        System.out.println("Introduce el ID del cliente");
-        String idC = u.tecladoS();
-
-        System.out.println("Introduce el nombre");
-        String nameC = u.tecladoS();
-
-        System.out.println("Introduce numero de telefono");
-        String phoneC = u.tecladoS();
-
-        control.createClient(idC, nameC, phoneC, LocalDateTime.now());
-    }
-
-    public static IClient createClients() {
-        System.out.println("Introduce el ID del cliente");
-        String idC = u.tecladoS();
-
-        System.out.println("Introduce el nombre");
-        String nameC = u.tecladoS();
-
-        System.out.println("Introduce numero de telefono");
-        String phoneC = u.tecladoS();
-
-        Client c = new Client(idC, nameC, phoneC, LocalDateTime.now());
-
-        return c;
-    }
-
 }

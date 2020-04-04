@@ -75,9 +75,7 @@ public class AppController implements IAppController {
                 aux.add(p);
             }
         }
-        if(!aux.isEmpty()){
             ordenado.addAll(aux);
-        } 
         return ordenado;
     }
 
@@ -219,7 +217,33 @@ public class AppController implements IAppController {
         return ordenado;
 
     }
-
+    public boolean isAvailableProductb(String key){
+        boolean result = false;
+        
+        for(Product p : pr.products){
+            if(p.getKey().equals(key)){
+                result = true;
+                break;
+            }
+        }
+        
+        
+        return result;
+    }
+    
+    public IClient isAvailableClient(String id){
+        IClient client = null;
+        
+        for(IClient c : cl.clients){
+            if(c.getID().equals(id)){
+                client = c;
+                break;
+            }
+        }
+        
+        return client;
+    }
+    
     @Override
     public Set<Reservation> listAllReservations() {
         return re.reserves;
