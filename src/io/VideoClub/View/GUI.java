@@ -32,9 +32,7 @@ public class GUI {
     private static RepositoryProduct pr = RepositoryProduct.getInstance();
     private static RepositoryClient cl = RepositoryClient.getInstance();
     private static RepositoryReserve re = RepositoryReserve.getInstance();
-    private static ProductComparator productComparator;
-    private static ReservationComparator reservationComparator;
-    private static ClientComparator clientComparator;
+    
 
     /**
      * Menú principal del programa, que deriva en sub-menús
@@ -245,7 +243,7 @@ public class GUI {
             System.out.println("3)Listar todos los clientes con reservas no finalizadas");
             System.out.println("4)Volver atrás");
             opcion = u.tecladoI();
-        } while (opcion < 1 || opcion > 3);
+        } while (opcion < 1 || opcion > 4);
 
         switch (opcion) {
             case 1:
@@ -258,7 +256,7 @@ public class GUI {
                 u.listClientS(control.listAllClientsWithReservationsNotFinished());
                 break;
             case 4:
-                client();
+                principal();
                 break;
         }
     }
