@@ -368,6 +368,9 @@ public class GUI {
         Set<Product> aux = null;
         Product p = null;
         IClient c = null;
+        System.out.println("-------Mostrando todos los productos disponibles------");
+        Set<Product> aux11 = control.listAllByStatus(Product.Status.AVAILABLE);
+        u.listProductS(aux11);
         System.out.println("Introduce el nombre del producto que quieres reservar:");
         String name = u.tecladoS();
         do {
@@ -412,6 +415,8 @@ public class GUI {
                 } else {
                     System.out.println("No se ha completado la reserva");
                 }
+            } else {
+                System.out.println("Error al reservar, comprueba cliente y/o producto");
             }
 
         }
