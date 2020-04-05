@@ -23,8 +23,8 @@ public class Utils {
     }
     
     /**
-     * Muestra uno a uno los productos del Set<> que recibe
-     * @param products Set<> de productos
+     * Muestra uno a uno los productos del Set que recibe
+     * @param products Set de productos
      */
     public void listProductS(Set<Product> products) {
         if (products != null) {
@@ -39,8 +39,8 @@ public class Utils {
     }
 
     /**
-     * Muestra uno a uno los productos del List<> que recibe
-     * @param products List<> de productos
+     * Muestra uno a uno los productos del List que recibe
+     * @param products List de productos
      */
     public void listProductL(List<Product> products) {
         if (products != null) {
@@ -55,8 +55,8 @@ public class Utils {
     }
 
     /**
-     * Muestra uno a uno los Clientes del Set<> que recibe
-     * @param clients Set<> de clientes
+     * Muestra uno a uno los Clientes del Set que recibe
+     * @param clients Set de clientes
      */
     public void listClientS(Set<IClient> clients) {
         if (clients != null) {
@@ -71,8 +71,8 @@ public class Utils {
     }
 
     /**
-     * Muestra una a una las reservas del Set<> que recibe
-     * @param reservations Set<> de reservas
+     * Muestra una a una las reservas del Set que recibe
+     * @param reservations Set de reservas
      */
     public void listReservationS(Set<Reservation> reservations) {
         if (reservations != null) {
@@ -88,7 +88,7 @@ public class Utils {
     
     /**
      * Muestra la key y el value de cada producto del Map que recibe
-     * @param products Map<> de productos y su posición
+     * @param products Map de productos y su posición
      */
     public void ListProductM(Map<Product, Integer> products) {
         for (Map.Entry<Product, Integer> m : products.entrySet()) {
@@ -141,7 +141,7 @@ public class Utils {
 
     /**
      * Scanner que lee por teclado un String
-     * @return devuelve el String leido por teclado
+     * @return String leído por teclado
      */
     public String tecladoS() {
         String result = "";

@@ -33,10 +33,12 @@ public class Movie extends Product{
 
     @Override
     public String toString() {
-
         return "[Pelicula] " + super.toString() + ", Categoría: " + category + ", Edad mínima: " + minAge;
     }
 
+     
+    
+    
     public Movie clone()throws CloneNotSupportedException {
         Product clone = (Product) super.clone(); //To change body of generated methods, choose Tools | Templates.
         return (Movie) clone;

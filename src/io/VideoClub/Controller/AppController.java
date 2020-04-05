@@ -60,7 +60,7 @@ public class AppController implements IAppController {
     private RepositoryReserve re = RepositoryReserve.getInstance();
 
     /**
-     * @return Devuelve el Set<> de productos
+     * @return Devuelve el Set de productos
      */
     @Override
     public Set<Product> listAllProducts() {
@@ -72,7 +72,7 @@ public class AppController implements IAppController {
      * Lista los productos que estén Available y según un comparador
      *
      * @param c Comparator para ordenarlos en un orden en concreto
-     * @return Set<> de productos available y ordenados según el Comparator c
+     * @return Set de productos available y ordenados según el Comparator c
      */
     @Override
     public Set<Product> listAllProducts(Comparator c) {
@@ -92,7 +92,7 @@ public class AppController implements IAppController {
      * Ordena todos los productos según su tipo
      *
      * @param type tipo que queremos ordenar
-     * @return Set<> de productos según el tipo type
+     * @return Set de productos según el tipo type
      */
     @Override
     public Set<Product> listAllByType(ProductsTypes type) {
@@ -109,7 +109,7 @@ public class AppController implements IAppController {
      * Ordena los productos por un nombre
      *
      * @param name nombre que queremos ordenar
-     * @return Set<> de productos según name
+     * @return Set de productos según name
      */
     @Override
     public Set<Product> listAllByName(String name) {
@@ -127,7 +127,7 @@ public class AppController implements IAppController {
      *
      * @param name nombre del producto
      * @param type tipo del producto
-     * @return Set<> de productos según su nombre y tipo
+     * @return Set de productos según su nombre y tipo
      */
     @Override
     public Set<Product> listAllByName(String name, ProductsTypes type) {
@@ -149,7 +149,7 @@ public class AppController implements IAppController {
      * ordena los productos según su estado (Avalieable, Reserved)
      *
      * @param status estado que queremos mostrar
-     * @return Set<> de productos según status
+     * @return Set de productos según status
      */
     @Override
     public Set<Product> listAllByStatus(Product.Status status) {
@@ -167,7 +167,7 @@ public class AppController implements IAppController {
     /**
      * Ordena los productos de tipo Otros
      *
-     * @return Set<> de productos de tipo Otros
+     * @return Set de productos de tipo Otros
      */
     @Override
     public List<Product> listAllDifferentProducts() {
@@ -180,7 +180,7 @@ public class AppController implements IAppController {
     /**
      * Ordena los productos de tipo Película
      *
-     * @return Set<> de productos de tipo Película
+     * @return Set de productos de tipo Película
      */
     @Override
     public List<Product> listAllDifferentMovies() {
@@ -193,7 +193,7 @@ public class AppController implements IAppController {
     /**
      * Ordena los productos de tipo Juego
      *
-     * @return Set<> de productos de tipo Juego
+     * @return Set de productos de tipo Juego
      */
     @Override
     public List<Product> listAllDifferentGames() {
@@ -207,7 +207,7 @@ public class AppController implements IAppController {
      * Ordena los productos según su nobmre en un Map
      *
      * @param name nombre del producto
-     * @return Map<> según los productos y su posición
+     * @return Map según los productos y su posición
      */
     @Override
     public Map<Product, Integer> listAllAmountOfProducts(String name) {
@@ -233,7 +233,7 @@ public class AppController implements IAppController {
      *
      * @param type tipo del producto
      * @param name nombre del producto
-     * @return devuelve un Map<> según el producto y su posición
+     * @return devuelve un Map según el producto y su posición
      */
     @Override
     public Map<Product, Integer> listAllAmountOfProducts(ProductsTypes type, String name) {
@@ -254,7 +254,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * @return Devuelve el Set<> de clientes
+     * @return Devuelve el Set de clientes
      */
     @Override
     public Set<IClient> listAllClients() {
@@ -265,7 +265,7 @@ public class AppController implements IAppController {
      * Ordena los clientes según un comparator
      *
      * @param c Comparator que recibe para ordenar a los clientes
-     * @return Set<> de clientes según el Comparator c
+     * @return Set de clientes según el Comparator c
      */
     @Override
     public Set<IClient> listAllClients(Comparator c) {
@@ -277,7 +277,7 @@ public class AppController implements IAppController {
     /**
      * Ordena a todos los clientes que tienen una reserva no finalizada
      *
-     * @return Set<> de clientes con reserva no finalizada
+     * @return Set de clientes con reserva no finalizada
      */
     @Override
     public Set<IClient> listAllClientsWithReservationsNotFinished() {
@@ -332,7 +332,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * @return Devuelve el Set<> de reservas
+     * @return Devuelve el Set de reservas
      */
     @Override
     public Set<Reservation> listAllReservations() {
@@ -343,7 +343,7 @@ public class AppController implements IAppController {
      * Ordena todas las reservas según un comparador
      *
      * @param c Comparator que recibe para ordenar a las reservas
-     * @return Set<> según el Comparator c
+     * @return Set según el Comparator c
      */
     @Override
     public Set<Reservation> listAllReservations(Comparator c) {
@@ -356,7 +356,7 @@ public class AppController implements IAppController {
      * Ordena todas las reservas según su estado
      *
      * @param status Estado que recibe para ordenar las reservas
-     * @return Set<> según el estado de las reservas
+     * @return Set según el estado de las reservas
      */
     @Override
     public Set<Reservation> listAllReservations(Reservation.StatusReserve status) {
@@ -454,7 +454,7 @@ public class AppController implements IAppController {
      * @param name nombre del producto
      * @param description descripcion del producto
      * @param prize precio del producto
-     * @return True si se ha podido introducir en el Set<>. False si no se ha
+     * @return True si se ha podido introducir en el Set. False si no se ha
      * podido introducir
      */
     @Override
@@ -463,7 +463,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Crea un producto Pelicula y lo introduce en el Set<> de productos
+     * Crea un producto Pelicula y lo introduce en el Set de productos
      *
      * @param type tipo (pelicula)
      * @param name nombre del producto
@@ -471,7 +471,7 @@ public class AppController implements IAppController {
      * @param precio precio del producto
      * @param cat categoria de película del producto
      * @param minAge edad mínima del producto
-     * @return True si se ha introducido en el Set<>. False si no se ha podido
+     * @return True si se ha introducido en el Set. False si no se ha podido
      * introducir
      */
     @Override
@@ -482,7 +482,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Crea un producto Juego y lo introduce en el Set<> de productos
+     * Crea un producto Juego y lo introduce en el Set de productos
      *
      * @param type tipo (juego)
      * @param name nombre del producto
@@ -490,7 +490,7 @@ public class AppController implements IAppController {
      * @param precio precio del producto
      * @param cat categoriía de juego del producto
      * @param minAge edad mínima del producto
-     * @return True si se ha introducido en el Set<>. False si no se ha podido
+     * @return True si se ha introducido en el Set. False si no se ha podido
      * introducir
      */
     @Override
@@ -501,13 +501,13 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Crea un Cliente y lo introduce en el Set<> de clientes
+     * Crea un Cliente y lo introduce en el Set de clientes
      *
      * @param id id del cliente
      * @param name nombre del cliente
      * @param phone teléfono del cliente
      * @param time fecha actual
-     * @return True si se ha introducido en el Set<> de clientes. False si no se
+     * @return True si se ha introducido en el Set de clientes. False si no se
      * ha podido introducir
      */
     @Override
@@ -519,7 +519,7 @@ public class AppController implements IAppController {
      * Elimina un cliente según su id
      *
      * @param id id de un cliente
-     * @return True si se ha eliminado del Set<>. False si no se ha podido
+     * @return True si se ha eliminado del Set. False si no se ha podido
      * eliminar
      */
     @Override
@@ -550,7 +550,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Edita un cliente del Set<>
+     * Edita un cliente del Set
      *
      * @param e cliente con los cambios
      * @return True si se ha podido modificar. False si no se ha podido
@@ -575,7 +575,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Clona un producto del Set<>
+     * Clona un producto del Set
      *
      * @param name nombre del producto a clonar
      * @return True si se ha podido clonar. False si no se ha podido
@@ -621,7 +621,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Elimina un producto del Set<>
+     * Elimina un producto del Set
      *
      * @param name nombre del producto a eliminar
      * @return True si se ha podido eliminar. False si no se ha podido eliminar
@@ -642,7 +642,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Edita un producto del Set<>
+     * Edita un producto del Set
      *
      * @param key código del producto a editar
      * @param newP el producto con las modificaciones
@@ -669,7 +669,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Busca si un producto existe en el Set<>
+     * Busca si un producto existe en el Set
      *
      * @param name nombre del producto que se busca
      * @return devuelve el producto buscado si existe. Null si no lo encuentra
@@ -688,7 +688,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Reserva un producto del Set<>
+     * Reserva un producto del Set
      *
      * @param prod producto que se va a reservar
      * @param client cliente que hace la reserva
@@ -704,7 +704,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Cierra una reserva del Set<> de reservas
+     * Cierra una reserva del Set de reservas
      *
      * @param reserve reserva que se quiere cerrar
      * @return el precio de la reserva
@@ -895,7 +895,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Guarda el Set<> de productos en una base de datos XML
+     * Guarda el Set de productos en una base de datos XML
      *
      * @return True si ha podido guardarla. False si no ha podido
      */
@@ -960,7 +960,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Guarda el Set<> de clientes en una base de datos XML
+     * Guarda el Set de clientes en una base de datos XML
      *
      * @return True si ha podido guardarla. False si no ha podido
      */
@@ -1014,7 +1014,7 @@ public class AppController implements IAppController {
     }
 
     /**
-     * Guarda el Set<> de reservas en una base de datos XML
+     * Guarda el Set de reservas en una base de datos XML
      *
      * @return True si ha podido guardarla. False si no ha podido
      */
