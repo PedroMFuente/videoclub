@@ -263,6 +263,7 @@ public class AppController implements IAppController {
 
     /**
      * Ordena los clientes según un comparator
+     *
      * @param c Comparator que recibe para ordenar a los clientes
      * @return Set<> de clientes según el Comparator c
      */
@@ -294,6 +295,7 @@ public class AppController implements IAppController {
 
     /**
      * Comprueba si el código es de un producto del Set
+     *
      * @param key código del producto
      * @return True si el código coincide con un producto. False si no coincide
      */
@@ -312,6 +314,7 @@ public class AppController implements IAppController {
 
     /**
      * Comprueba si el ID coincide con el de algún cliente
+     *
      * @param id id de un cliente
      * @return True si coincide con algún cliente. False si no coincide
      */
@@ -338,6 +341,7 @@ public class AppController implements IAppController {
 
     /**
      * Ordena todas las reservas según un comparador
+     *
      * @param c Comparator que recibe para ordenar a las reservas
      * @return Set<> según el Comparator c
      */
@@ -350,6 +354,7 @@ public class AppController implements IAppController {
 
     /**
      * Ordena todas las reservas según su estado
+     *
      * @param status Estado que recibe para ordenar las reservas
      * @return Set<> según el estado de las reservas
      */
@@ -367,6 +372,7 @@ public class AppController implements IAppController {
 
     /**
      * Ganancias de la empresa
+     *
      * @return ganancia en doube
      */
     @Override
@@ -388,6 +394,7 @@ public class AppController implements IAppController {
 
     /**
      * Ganancias de la empresa en una fecha en concreto
+     *
      * @param from fecha de donde queremos sacar las ganancias
      * @return ganancias en double
      */
@@ -418,6 +425,7 @@ public class AppController implements IAppController {
 
     /**
      * ganancias de la empresa en un tiempo en concreto
+     *
      * @param from donde empieza a contar las ganancias
      * @param to donde termina de contar las ganancias
      * @return ganancias en double
@@ -442,10 +450,12 @@ public class AppController implements IAppController {
 
     /**
      * Crea un producto Other y lo introduce en el Set
+     *
      * @param name nombre del producto
      * @param description descripcion del producto
      * @param prize precio del producto
-     * @return True si se ha podido introducir en el Set<>. False si no se ha podido introducir
+     * @return True si se ha podido introducir en el Set<>. False si no se ha
+     * podido introducir
      */
     @Override
     public boolean createProduct(String name, String description, double prize) { //otros
@@ -454,13 +464,15 @@ public class AppController implements IAppController {
 
     /**
      * Crea un producto Pelicula y lo introduce en el Set<> de productos
+     *
      * @param type tipo (pelicula)
      * @param name nombre del producto
      * @param description descripcion del producto
      * @param precio precio del producto
      * @param cat categoria de película del producto
      * @param minAge edad mínima del producto
-     * @return True si se ha introducido en el Set<>. False si no se ha podido introducir
+     * @return True si se ha introducido en el Set<>. False si no se ha podido
+     * introducir
      */
     @Override
     public boolean createMovie(ProductsTypes type, String name, String description, double precio, MovieCategory cat, int minAge) {
@@ -471,13 +483,15 @@ public class AppController implements IAppController {
 
     /**
      * Crea un producto Juego y lo introduce en el Set<> de productos
+     *
      * @param type tipo (juego)
      * @param name nombre del producto
      * @param description descripcion del producto
      * @param precio precio del producto
      * @param cat categoriía de juego del producto
      * @param minAge edad mínima del producto
-     * @return True si se ha introducido en el Set<>. False si no se ha podido introducir
+     * @return True si se ha introducido en el Set<>. False si no se ha podido
+     * introducir
      */
     @Override
     public boolean createGame(ProductsTypes type, String name, String description, double precio, GameCategory cat, int minAge) {
@@ -488,11 +502,13 @@ public class AppController implements IAppController {
 
     /**
      * Crea un Cliente y lo introduce en el Set<> de clientes
+     *
      * @param id id del cliente
      * @param name nombre del cliente
      * @param phone teléfono del cliente
      * @param time fecha actual
-     * @return True si se ha introducido en el Set<> de clientes. False si no se ha podido introducir
+     * @return True si se ha introducido en el Set<> de clientes. False si no se
+     * ha podido introducir
      */
     @Override
     public boolean createClient(String id, String name, String phone, LocalDateTime time) {
@@ -501,8 +517,10 @@ public class AppController implements IAppController {
 
     /**
      * Elimina un cliente según su id
+     *
      * @param id id de un cliente
-     * @return True si se ha eliminado del Set<>. False si no se ha podido eliminar
+     * @return True si se ha eliminado del Set<>. False si no se ha podido
+     * eliminar
      */
     @Override
     public boolean removeClient(String id) {
@@ -533,8 +551,10 @@ public class AppController implements IAppController {
 
     /**
      * Edita un cliente del Set<>
+     *
      * @param e cliente con los cambios
-     * @return True si se ha podido modificar. False si no se ha podido modificar
+     * @return True si se ha podido modificar. False si no se ha podido
+     * modificar
      */
     @Override
     public boolean editClient(IClient e) {
@@ -556,6 +576,7 @@ public class AppController implements IAppController {
 
     /**
      * Clona un producto del Set<>
+     *
      * @param name nombre del producto a clonar
      * @return True si se ha podido clonar. False si no se ha podido
      */
@@ -601,6 +622,7 @@ public class AppController implements IAppController {
 
     /**
      * Elimina un producto del Set<>
+     *
      * @param name nombre del producto a eliminar
      * @return True si se ha podido eliminar. False si no se ha podido eliminar
      */
@@ -621,9 +643,11 @@ public class AppController implements IAppController {
 
     /**
      * Edita un producto del Set<>
+     *
      * @param key código del producto a editar
      * @param newP el producto con las modificaciones
-     * @return True si se ha podidio modificar. False si no se ha podidio modificar
+     * @return True si se ha podidio modificar. False si no se ha podidio
+     * modificar
      */
     @Override
     public boolean editProduct(String key, Product newP) {
@@ -646,6 +670,7 @@ public class AppController implements IAppController {
 
     /**
      * Busca si un producto existe en el Set<>
+     *
      * @param name nombre del producto que se busca
      * @return devuelve el producto buscado si existe. Null si no lo encuentra
      */
@@ -664,9 +689,11 @@ public class AppController implements IAppController {
 
     /**
      * Reserva un producto del Set<>
+     *
      * @param prod producto que se va a reservar
      * @param client cliente que hace la reserva
-     * @return True si se ha podido añadir la reserva. False si no se ha podido añadir
+     * @return True si se ha podido añadir la reserva. False si no se ha podido
+     * añadir
      */
     @Override
     public boolean reserveProduct(Product prod, IClient client) {
@@ -678,6 +705,7 @@ public class AppController implements IAppController {
 
     /**
      * Cierra una reserva del Set<> de reservas
+     *
      * @param reserve reserva que se quiere cerrar
      * @return el precio de la reserva
      */
@@ -697,6 +725,7 @@ public class AppController implements IAppController {
 
     /**
      * Lee la base de datos en XML de productos
+     *
      * @return true si la lee. False si no la puede leer
      */
     @Override
@@ -765,6 +794,7 @@ public class AppController implements IAppController {
 
     /**
      * Lee una base de datos en XML de clientes
+     *
      * @return True si la ha podido leer. False si no ha podido leerla.
      */
     @Override
@@ -808,6 +838,7 @@ public class AppController implements IAppController {
 
     /**
      * Lee una base de datos en XML de reservas
+     *
      * @return True si ha podido leerla. False si no ha podido
      */
     @Override
@@ -855,6 +886,7 @@ public class AppController implements IAppController {
 
     /**
      * Lee las tres bases de datos a la vez
+     *
      * @return True si ha podido leerlas. False si no
      */
     @Override
@@ -864,6 +896,7 @@ public class AppController implements IAppController {
 
     /**
      * Guarda el Set<> de productos en una base de datos XML
+     *
      * @return True si ha podido guardarla. False si no ha podido
      */
     @Override
@@ -928,6 +961,7 @@ public class AppController implements IAppController {
 
     /**
      * Guarda el Set<> de clientes en una base de datos XML
+     *
      * @return True si ha podido guardarla. False si no ha podido
      */
     @Override
@@ -981,6 +1015,7 @@ public class AppController implements IAppController {
 
     /**
      * Guarda el Set<> de reservas en una base de datos XML
+     *
      * @return True si ha podido guardarla. False si no ha podido
      */
     @Override
@@ -1043,10 +1078,6 @@ public class AppController implements IAppController {
         return aux;
     }
 
-    /**
-     * Guarda todas las bases de datos a la vez
-     * @return True si se guargan las bases de datos. Falses si no han podido.
-     */
     @Override
     public boolean saveAllDDBB() {
         return saveCatalogFromDDBB() && saveClientsFromDDBB() && saveReservationsFromDDBB();

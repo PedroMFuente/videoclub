@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 /**
  * Repositorio del Set de reservas
+>>>>>>> origin/master
  * @author migue
  */
 public class RepositoryReserve {

@@ -80,6 +80,7 @@ public abstract class Product extends Item implements Cloneable, Comparable<Prod
     @Override
     public String toString() {
         return  super.toString() + ", Código: " + key + ", Estado: " + status;
+
     }
 
     

@@ -141,7 +141,7 @@ public class Utils {
 
     /**
      * Scanner que lee por teclado un String
-     * @return String leído por teclado
+     * @return devuelve el String leido por teclado
      */
     public String tecladoS() {
         String result = "";

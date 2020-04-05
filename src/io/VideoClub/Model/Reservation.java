@@ -104,6 +104,7 @@ public class Reservation implements Comparable<Reservation>{
     @Override
     public String toString() {
         return "[Reservation] " + "pro=" + pro + "/n cli=" + cli + "/n ini=" + ini + ", end=" + end + ", finished=" + finished + ", status=" + status + '}';
+
     }
     
 }
